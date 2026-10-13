@@ -1,6 +1,6 @@
-// Bản sắc riêng của 85 game: mascot có tên, bảng màu, ba câu thoại, một khoảnh khắc chữ ký, một đạo cụ AR.
+// Bản sắc riêng của 91 game: mascot có tên, bảng màu, ba câu thoại, một khoảnh khắc chữ ký, một đạo cụ AR.
 // Nguồn cảm hứng và ràng buộc: tools/lib/identity.mjs. Mỗi dòng lấy từ cột bối cảnh + nhiệm vụ của games.mjs,
-// không đặt tên chung chung. Tên mascot, bộ ba màu, chữ ký và câu thoại không được trùng giữa 85 game;
+// không đặt tên chung chung. Tên mascot, bộ ba màu, chữ ký và câu thoại không được trùng giữa 91 game;
 // node tools/validate.mjs kiểm cả bốn điều đó bằng dữ liệu, không kiểm bằng lời hứa.
 
 // [id, mascot, tính cách, [khen, đỡ sai, hô mở đầu], [--miti-1, --miti-2, --miti-3], khoảnh khắc chữ ký, đạo cụ AR]
@@ -46,7 +46,8 @@ const I = [
   ['L4-38', 'Thợ Lửa', 'dứt khoát, không vòng vo', ['Tìm đúng góc!', 'Góc tù hơn chút nữa', 'Cứu hộ, ba hai!'], ['#D00000', '#003049', '#FFBA08'], 'thước đo góc quét một vòng sáng quanh nhân vật và cột lửa lùi ra mở lối', 'thước đo góc đeo eo, xoay theo hướng tay em chỉ'],
   ['L4-39', 'Thám Mực', 'hay nghi ngờ, hỏi kỹ', ['Đúng bằng chứng rồi!', 'Hồ sơ khác kia nha', 'Bật đèn soi!'], ['#3D348B', '#F7AF63', '#7678ED'], 'đèn bàn bật sáng soi đúng ô bằng chứng và hồ sơ tự mở một nhịp', 'kính lúp neo bàn tay phải, phóng to vùng em chỉ'],
   ['L4-40', 'Giai Ba', 'lì lợm, biết chờ thời cơ', ['Boss mất một giai đoạn!', 'Còn gợi ý, dùng đi em', 'Giao chiến, bắt đầu!'], ['#1B263B', '#F1FAEE', '#FF5959'], 'boss quỳ xuống, cả phòng hiện lời giải từng bước rồi pháo giấy nổ một lần', 'thanh máu boss trên đầu em, vơi theo từng giai đoạn'],
-  ['L4-41', 'Cu Tị', 'nhanh tay, mê rình chuột thò đầu', ['Vụt trúng rồi, giỏi quá!', 'Chuột này mang số sai, ngắm con khác nào', 'Chuột lên, một hai ba vụt!'], ['#7F4F24', '#A7C957', '#F2E8CF'], 'sáu lỗ chuột cùng sáng đèn rồi con chuột mang đáp án đúng giơ cao thẻ số', 'vợt đập ruồi neon buộc sau vai phải, vẫy mạnh khi chuỗi đúng đạt 3'],
+  ['L4-41', 'Cu Tị', 'nhanh tay, mê rình chuột thò đầu', ['Vụt trúng rồi, giỏi quá!', 'Chuột này mang số sai, ngắm con khác nào', 'Chuột lên, một hai ba vụt!'], ['#7F4F24', '#A7C957', '#F2E8CF'], 'mười hai lỗ chuột cùng sáng đèn theo hàng rồi con chuột mang đáp án đúng giơ cao thẻ số', 'vợt đập ruồi neon buộc sau vai phải, vẫy mạnh khi chuỗi đúng đạt 3'],
+  ['L4-42', 'Bắp Ếch', 'cứng cựa, nhảy trước trả lời sau', ['Đúng bảng nhân rồi!', 'Con này tính nhầm, nhìn lại nhóm nào', 'Ê ếch, một hai vụt!'], ['#2D6A4F', '#95D5B2', '#1B4332'], 'mười hai hang nhái sáng đèn cùng nhịp và con nhái đúng nhảy cao nhất ngay trước tay em', 'chiếc lá sen neon gắn cổ tay trái, xoay khi em vụt trúng'],
 
   // ───────────────── TOÁN 5 ─────────────────
   ['T5-01', 'Đặc Vụ', 'lạnh, nói rất ngắn', ['Két mở rồi!', 'Làm nhân trước nhé', 'Phá khóa, ba hai!'], ['#0B132B', '#FE5F55', '#3C1642'], 'bốn ổ khóa bật cùng lúc thành một tiếng và cánh cửa bí mật mở hé', 'máy bộ đàm đeo tai trái, nhấp nháy mỗi cú đấm'],
@@ -64,6 +65,7 @@ const I = [
   ['T5-13', 'Mật Mã', 'bí ẩn, ít nói', ['Mật số đúng rồi!', 'Đo lại chiều cao nhé', 'Tìm ba kích thước!'], ['#FFD60A', '#14213D', '#FFC30F'], 'cánh kho xoay theo khối em xếp và vàng bên trong sáng một nhịp rồi tắt', 'thước kẹp đeo hông, mở theo tay em kéo'],
   ['T5-14', 'Trạm Đổi', 'nhanh nhẹn, nhắc đọc trục', ['Điền đúng dữ kiện!', 'Nhìn trục thời gian đi', 'Xe tới trạm rồi!'], ['#00AFB5', '#0FF0FC', '#027368'], 'bảng điện tự quay và ô trống nhảy vào đúng chỗ rồi cả trạm nhấp nháy xanh', 'cờ hiệu trạm neo vai phải, phất khi xe tới'],
   ['T5-15', 'Tướng Trận', 'hiền, hay bày kế', ['Đúng chiến thuật rồi!', 'Cách này chưa ổn đâu', 'Bày binh pháp!'], ['#603808', '#DDB892', '#A26769'], 'bản đồ chiến thuật trải ra trước mặt em và quân cờ tự chạy theo sơ đồ đoạn thẳng', 'bảng chiến thuật đeo lưng, lật khi em nắm thẻ'],
+  ['T5-16', 'Út Hàng', 'nói nhỏ, nhắc viết đủ hàng thập phân', ['Đúng hàng rồi!', 'Con này lệch một hàng, ngắm lại', 'Chuột lên, đếm hàng nào!'], ['#4361EE', '#4CC9F0', '#F2E8CF'], 'mười hai hang chuột sáng đèn theo ba hàng và con chuột mang đáp án đúng nhô cao nhất, thẻ số quay mặt về phía em', 'thước hàng neon nối dài từ vợt, hiện tên hàng phần mười khi em vụt trúng'],
 
   // ───────────────── TIẾNG ANH · PRE A1 STARTERS ─────────────────
   ['ST-01', 'Kiếm Từ', 'lặng, chém gọn', ['Đúng từ rồi!', 'Chữ nào đó, thử lại', 'Sẵn sàng, chém!'], ['#A98467', '#5F7161', '#EBE3D5'], 'tấm bảng gãy làm hai và mặt sau hiện nghĩa tiếng Việt đúng một nhịp', 'lưỡi kiếm gỗ sau lưng em, quay khi tay em vuốt'],
@@ -76,6 +78,7 @@ const I = [
   ['ST-08', 'Găng Bong', 'ham đập bóng', ['Đập trúng rồi!', 'Quả đó sai nghĩa kìa', 'Găng lên, đập!'], ['#EF233C', '#EDF2F4', '#D90429'], 'quả bóng vỡ ra thành đúng từ tiếng Anh và mascot chọc quả tiếp theo', 'chiếc găng khổng lồ trước mặt em, căng khi em đấm'],
   ['ST-09', 'Ba Rổ', 'hay gom đồ', ['Rổ đúng rồi!', 'Chữ đó ở rổ kia', 'Nghe rồi thả!'], ['#665191', '#A34A34', '#A5A58D'], 'cả ba rổ xóc lên còn chiếc rổ đúng bật nắp reo lên một tiếng', 'ba cái rổ trước bụng em, nhấp nháy khi em chỉ'],
   ['ST-10', 'Đảo Con', 'thích cắm cờ', ['Đảo mở rồi!', 'Câu này khó, thử lại', 'Neo xuống đảo!'], ['#277DA1', '#FFD65C', '#F05655'], 'năm đảo lần lượt sáng đèn và một lá cờ cắm xuống đảo vừa hoàn thành', 'bản đồ cuộn đeo lưng, mở ra khi em chỉ đảo'],
+  ['ST-11', 'Tai Thỏ', 'vểnh tai nghe rồi mới trả lời', ['Đúng từ rồi!', 'Con này sai chữ, nghe lại nha', 'Chuột lên, nào vụt!'], ['#F4A261', '#E9C46A', '#2A9D8F'], 'mười hai hang chuột cùng nhô lên một nhịp, con mang từ đúng sáng viền và phát âm lại một lần', 'thẻ từ neon buộc sau vai trái, lật mặt khi em vụt trúng'],
 
   // ───────────────── TIẾNG ANH · A1 MOVERS ─────────────────
   ['MV-01', 'Săn Từ', 'lặng lẽ, mắt tinh', ['Tìm đúng từ!', 'Bụi kia rỗng thôi', 'Đi săn nào!'], ['#344E41', '#588157', '#3A5A40'], 'cả bụi cùng ngã xuống để chú nai từ vựng hiện ra ngay dưới tay em', 'đôi tai thỏ trên đầu em, quay khi em đổi hướng'],
@@ -88,6 +91,7 @@ const I = [
   ['MV-08', 'Ba Lá', 'hay hồi hộp', ['Đúng bộ ba!', 'Lá này chưa phải đâu', 'Lật ba lá nào!'], ['#0D3B66', '#F0F3EE', '#FAA307'], 'ba lá cùng dựng đứng, mascot xếp thành chồng gọn rồi giơ ngón cái', 'ba lá bài sau lưng em, sáng dần theo từng cặp đúng'],
   ['MV-09', 'Pháo Thủ', 'nóng tính, hay nhắc', ['Bắn trúng rồi!', 'Quả đó sai chính tả', 'Nạp đạn, bắn!'], ['#22223B', '#9A8C98', '#4E4C66'], 'loạt đạn sai vỡ giữa không trung và pháo đài bắn lên một cờ hiệu', 'ống nhòm pháo đài trước ngực em, nòng quay khi em đấm'],
   ['MV-10', 'Hải Đăng', 'chiếu xa, hay chờ', ['Đúng câu rồi!', 'Đảo này khó, thử lại', 'Giơ neo lên!'], ['#14532D', '#FFB703', '#2D6A4F'], 'đèn hải đăng quay một vòng và hòn đảo kế tiếp hiện ra đúng lúc', 'chiếc đèn hiệu trên đầu em, quét sáng mỗi câu đúng'],
+  ['MV-11', 'Bút Nhí', 'nắn nót, ghét viết ẩu', ['Viết đúng rồi!', 'Chữ này thừa một chữ cái kia', 'Bấm bút, một hai vụt!'], ['#EF476F', '#118AB2', '#FFD60A'], 'mười hai hang chuột mở đèn theo hàng và con mang từ viết đúng chính tả nhô lên cao nhất kèm tiếng chuông', 'ngòi bút neon gắn sống vợt, gạch chân từ đúng khi em vụt trúng'],
 
   // ───────────────── TIẾNG ANH · A2 FLYERS ─────────────────
   ['FY-01', 'Vách Đá', 'hiền, gợi ý nửa câu', ['Điền khớp rồi!', 'Nghĩa chưa hợp em ơi', 'Leo rồi đọc!'], ['#6C584C', '#DDB892', '#B9A087'], 'chỗ trống vừa điền phát sáng và cả đoạn văn trên vách đọc thành một mạch', 'chiếc búa nhỏ khắc vào vai trái em, rung khi khớp'],
@@ -100,6 +104,7 @@ const I = [
   ['FY-08', 'Tai Nhanh', 'thính lắm, nghe một lần là ra', ['Đúng làn rồi!', 'Nghe lại rồi chọn nha', 'Nghe, bước, chạy!'], ['#06D6A0', '#073B4C', '#FFD166'], 'làn đúng sáng đèn ba nhịp còn mascot chống nạnh ở vạch đích', 'đai đội trưởng trước ngực em, đổi màu khi em đổi bên'],
   ['FY-09', 'Gốc Từ', 'hay biến hình', ['Từ mới ra rồi!', 'Tiền tố chưa hợp đâu', 'Lắp ghép nào!'], ['#3D5A80', '#EE6C4D', '#98C1D9'], 'gốc từ quay một vòng, mảnh vừa ghép nhảy vào chỗ cũ rồi cả từ nảy lên', 'ống nghiệm gắn trước bụng em, sủi bọt khi ghép đúng'],
   ['FY-10', 'Cúp Vàng', 'oai, hay mời lên bục', ['Đạt một trạm!', 'Trạm này khó, thở đi', 'Lên bục nào!'], ['#FFD700', '#F8F9FA', '#6B4FBB'], 'sáu trạm cùng sáng và mascot bước lên bục giơ cúp đúng một lần cuối phiên', 'vòng hoa huân chương trước ngực em, sáng thêm mỗi trạm'],
+  ['FY-11', 'Cánh Buồm', 'chắc tay, ghim từng mảnh câu', ['Ghép đúng cụm rồi!', 'Mảnh này lệch rồi, đọc lại câu', 'Giương buồm, một hai vụt!'], ['#FF7B00', '#FFBF7F', '#048A81'], 'cả đàn chuột sáng đèn theo hàng và cụm từ vừa ghép xong hiện nguyên văn trên cánh buồm', 'mảnh từ neon gắn sau vai phải, gắn thêm một mảnh mỗi khi em vụt đúng'],
 ];
 
 export const IDENTITIES = Object.fromEntries(

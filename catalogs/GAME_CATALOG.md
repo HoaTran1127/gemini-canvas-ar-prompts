@@ -1,6 +1,6 @@
 # 🎮 MiTi — Danh mục game
 
-**86 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file. Mạch Tiếng Anh chia theo band Cambridge YLE (Starters · Movers · Flyers), cột `lop` chỉ còn là chú giải SGK.
+**91 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file. Mạch Tiếng Anh chia theo band Cambridge YLE (Starters · Movers · Flyers), cột `lop` chỉ còn là chú giải SGK.
 
 Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node tools/build.mjs` để dựng lại catalog, prompt và dashboard.
 
@@ -48,7 +48,7 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | L4-38 | Giải Cứu Góc | Góc nhọn, vuông, tù, bẹt; đỉnh, cạnh; đo góc bằng thước nửa tròn; góc ở đỉnh chung | Chỉ tay tới nhân vật đang cầm góc đúng loại (nhọn, vuông, tù) và số đo đề bài. | `POINT` | [Mở prompt](../prompts/01-toan4/L4-38-angle-rescue.md) |
 | L4-39 | Thám Tử Dữ Liệu | Đọc biểu đồ cột; biểu đồ cột đôi; tạo cột theo số liệu; câu hỏi so sánh trên biểu đồ | Chỉ vào bằng chứng trong bảng hoặc biểu đồ để trả lời từng nghi vấn. | `POINT` | [Mở prompt](../prompts/01-toan4/L4-39-data-detective.md) |
 | L4-40 | Phòng Boss Toán | Trận boss tổng hợp: 3 giai đoạn tăng độ khó với kiến thức đã học trong chương | Đấm chuỗi đáp án đúng qua ba giai đoạn, mỗi giai đoạn được một lần dùng gợi ý. | `PUNCH` | [Mở prompt](../prompts/01-toan4/L4-40-math-boss-lab.md) |
-| L4-41 | Đập Chuột Thò Đầu | Cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc | Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính. | `SWAT` | [Mở prompt](../prompts/01-toan4/L4-41-whack-a-mole.md) |
+| L4-41 | Đập Chuột Thò Đầu | Cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc | Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính; đập hụt thì vụt lại, không trừ tim. | `SWAT` | [Mở prompt](../prompts/01-toan4/L4-41-whack-a-mole.md) |
 
 ## Toán lớp 5 (15)
 
@@ -70,7 +70,7 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | T5-14 | Đua Bài Toán Chuyển Động | Quãng đường vận tốc thời gian; đơn vị đo thời gian; hai chuyển động ngược chiều cùng khởi hành | Chỉ dữ kiện đúng trên trục thời gian để tính vận tốc hoặc quãng đường còn thiếu. | `POINT` | [Mở prompt](../prompts/02-toan5/T5-14-motion-word-problem.md) |
 | T5-15 | Đấu Trường Chiến Thuật Toán | Ôn tổng hợp số thập phân, phân số, phần trăm, hình học, đo lường và bài toán chuyển động lớp 5 | Nắm thẻ chiến lược (rút về đơn vị, tỉ số, sơ đồ đoạn thẳng) áp vào đề bài rồi chọn đáp án. | `GRAB` + `POINT` | [Mở prompt](../prompts/02-toan5/T5-15-math-strategy-arena.md) |
 
-## Tiếng Anh · Pre A1 Starters (Cambridge) (10)
+## Tiếng Anh · Pre A1 Starters (Cambridge) (11)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
@@ -84,8 +84,9 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | ST-08 | Đập Từ | Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng. | `PUNCH` | [Mở prompt](../prompts/03-english-starters/ST-08-punch-word.md) |
 | ST-09 | Nghe Và Phân Loại | Nghe rồi phân loại từ vào 3 nhóm chủ đề; nghe và chọn từ sai khác | Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó. | `POINT` + `DRAG` | [Mở prompt](../prompts/03-english-starters/ST-09-listen-sort.md) |
 | ST-10 | Bản Đồ Phiêu Lưu Tiếng Anh | Bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu | Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu. | `POINT` | [Mở prompt](../prompts/03-english-starters/ST-10-skill-map.md) |
+| ST-11 | Đập Chuột Tranh Từ | Nối tranh với từ; kéo thả từ vào chỗ trống theo tranh; nhận diện từ qua hình | Vụt tay đập trúng con chuột mang từ tiếng Anh đúng với tranh hoặc nghĩa tiếng Việt đang hiện. | `SWAT` | [Mở prompt](../prompts/03-english-starters/ST-11-picture-whack.md) |
 
-## Tiếng Anh · A1 Movers (Cambridge) (10)
+## Tiếng Anh · A1 Movers (Cambridge) (11)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
@@ -99,8 +100,9 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | MV-08 | Bộ Ba Trí Nhớ | Ghép bộ ba từ tranh nghĩa tiếng Việt; 8 bộ mỗi lượt | Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-08-triple-memory.md) |
 | MV-09 | Pháo Đài Chính Tả | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai. | `PUNCH` | [Mở prompt](../prompts/04-english-movers/MV-09-spelling-fort.md) |
 | MV-10 | Đảo Ôn Tập | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh | Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-10-revision-island.md) |
+| MV-11 | Đập Chuột Viết Đúng | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Vụt tay đập trúng con chuột mang cách viết đúng chính tả; các con khác mang đúng lỗi hay mắc. | `SWAT` | [Mở prompt](../prompts/04-english-movers/MV-11-spelling-whack.md) |
 
-## Tiếng Anh · A2 Flyers (Cambridge) (10)
+## Tiếng Anh · A2 Flyers (Cambridge) (11)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
@@ -114,6 +116,7 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | FY-08 | Đường Đua Nghe | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng. | `STEP` | [Mở prompt](../prompts/05-english-flyers/FY-08-listen-race.md) |
 | FY-09 | Phòng Thí Nghiệm Tạo Từ | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại. | `POINT` + `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-09-word-lab.md) |
 | FY-10 | Cúp Thử Thách Tiếng Anh | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh | Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn. | `POINT` | [Mở prompt](../prompts/05-english-flyers/FY-10-english-cup.md) |
+| FY-11 | Đập Chuột Ghép Cụm | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Vụt tay đập trúng con chuột mang mảnh từ đúng để ghép kín cụm từ trong câu. | `SWAT` | [Mở prompt](../prompts/05-english-flyers/FY-11-phrase-whack.md) |
 
 ## Gesture được dùng
 
@@ -129,4 +132,4 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | `TWO_HAND_BALANCE` | Cân bằng hai tay (Two-hand balance) | 1 |
 | `ANGLE_POSE` | Tạo góc bằng cánh tay (Angle pose) | 1 |
 | `VOICE` | Nói (Voice) | 2 |
-| `SWAT` | Đập / vụt bằng vật cầm tay (Swat) | 1 |
+| `SWAT` | Đập / vụt bằng vật cầm tay (Swat) | 6 |

@@ -1,5 +1,5 @@
 # 🟡 MiTi ✦ Học Bằng Chuyển Động
-### 🎮 Thư Viện 85 Prompt Game Chuẩn (+12 Prompt Legacy) Tạo Game Web AR Tương Tác Qua Camera Bằng Google Gemini
+### 🎮 Thư Viện 91 Prompt Game Chuẩn (+12 Prompt Legacy) Tạo Game Web AR Tương Tác Qua Camera Bằng Google Gemini
 
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-Canvas_Ready-8E75FF?style=for-the-badge&logo=googlegemini&logoColor=white)](https://gemini.google.com)
 [![MediaPipe AI](https://img.shields.io/badge/AI_Vision-MediaPipe_Tasks_Vision_1.0.1-00F0FF?style=for-the-badge&logo=google&logoColor=black)](https://developers.google.com/mediapipe)
@@ -43,16 +43,16 @@ khối ```text.                  Nhấn Enter để AI tạo game.         ngay 
 
 | Thành phần | Trước | Sau |
 |:---|---:|---:|
-| 85 prompt game | 13,49 MB (TB 162 KB) | **1,03 MB (TB 12 KB)** |
+| 91 prompt game | 13,49 MB (TB 162 KB) | **1,15 MB (TB 13 KB)** |
 | 12 prompt legacy | ~124 KB/file | **9,8–10,2 KB/file** |
-| `VARIANTS_425.md` | 64,05 MB | **4,66 MB** (mỗi block ≤ 11,3 KB) |
-| `00-master-canvas-prompt.md` | 188 KB | **13,2 KB** |
-| `templates/game-prompt-template.md` | 115,6 KB | **10,6 KB** |
+| `VARIANTS.md` | 64,05 MB | **5,03 MB** (mỗi block ≤ 13,5 KB) |
+| `00-master-canvas-prompt.md` | 188 KB | **14,7 KB** |
+| `templates/game-prompt-template.md` | 115,6 KB | **11,6 KB** |
 | `CHECKLIST_NGHIEP_THU.md` | 52,3 KB | **9,7 KB** |
 
 Mỗi prompt giờ có **đúng 5 mục**: `1. Ý TƯỞNG` · `2. MỤC TIÊU HỌC TẬP` · `3. RÀNG BUỘC CỐT LÕI` · `4. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)` · `5. TỰ KIỂM TRA TRƯỚC KHI XUẤT`.
 
-Toàn bộ quy định dùng chung (1 file HTML, camera tắt mặc định, MediaPipe Tasks Vision `@1.0.1` + `toScreen`, chống spam cử chỉ, fallback chuột, không điểm/xếp hạng/timer, vận động thật + 5 bước, luân phiên 4 em, accessibility, tự Pause, chữ ký MiTi, không TODO) nằm trong **14 dòng `CORE_LINES` ở `tools/lib/core.mjs`** — nơi **duy nhất** để đổi quy định cho cả 85 prompt + 425 biến thể. `node tools/validate.mjs` in nguyên văn 14 dòng đó vào từng prompt và **báo đỏ nếu một prompt vượt trần 15.000 byte**.
+Toàn bộ quy định dùng chung (1 file HTML, camera tắt mặc định, MediaPipe Tasks Vision `@1.0.1` + `toScreen`, chống spam cử chỉ, fallback chuột, không điểm/xếp hạng/timer, vận động thật + 5 bước, luân phiên 4 em, accessibility, tự Pause, chữ ký MiTi, không TODO) nằm trong **14 dòng `CORE_LINES` ở `tools/lib/core.mjs`** — nơi **duy nhất** để đổi quy định cho cả 91 prompt + 455 biến thể. `node tools/validate.mjs` in nguyên văn 14 dòng đó vào từng prompt và **báo đỏ nếu một prompt vượt trần 15.000 byte**.
 
 ---
 
@@ -62,28 +62,28 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 
 | Nhóm | Số lượng | Mở ở đâu |
 |:---|:---:|:---|
-| Prompt game chuẩn (Toán 4 · Toán 5 · Starters · Movers · Flyers) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/gemini-canvas-ar-prompts/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
+| Prompt game chuẩn (Toán 4 · Toán 5 · Starters · Movers · Flyers) | **91** | [Dashboard MiTi](https://hoatran1127.github.io/gemini-canvas-ar-prompts/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 5 mục để tự viết prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
 | Bảng kiểm nghiệm thu cầm tay (14 mục cốt lõi + 6 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
-| Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
+| Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **455** | [prompts/VARIANTS.md](prompts/VARIANTS.md) — 91 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (giữ cơ chế cũ, dùng ràng buộc cốt lõi hiện hành) | **12** | [prompts/README.md](prompts/README.md) |
 
-## 📚 85 GAME CHUẨN: TOÁN THEO KHỐI LỚP, TIẾNG ANH THEO BAND CAMBRIDGE
+## 📚 91 GAME CHUẨN: TOÁN THEO KHỐI LỚP, TIẾNG ANH THEO BAND CAMBRIDGE
 
 | Môn Học & Khối Lớp | Số Lượng | Nội Dung Trọng Tâm | Link |
 |:---|:---:|:---|:---|
-| 🔢 **Toán Lớp 4** | **40** | Cấu tạo số, 4 phép tính, phân số, hình học, diện tích, góc, đổi đơn vị đo | [prompts/01-toan4/](prompts/01-toan4/) |
-| 📐 **Toán Lớp 5** | **15** | Số thập phân, tỉ số %, chuyển động s = v × t, thể tích khối hộp | [prompts/02-toan5/](prompts/02-toan5/) |
-| 🇬🇧 **Tiếng Anh · Pre A1 Starters** | **10** | Từ vựng nền tảng (Animals, School, Family, Colours), nghe chọn tranh, chính tả, ghép câu, phonics | [prompts/03-english-starters/](prompts/03-english-starters/) |
-| 🌍 **Tiếng Anh · A1 Movers** | **10** | Quá khứ đơn, so sánh hơn/nhất, xây từ, đặt câu hỏi, bộ ba trí nhớ, ôn tổng hợp | [prompts/04-english-movers/](prompts/04-english-movers/) |
-| 🎓 **Tiếng Anh · A2 Flyers** | **10** | Điền từ vào đoạn văn, cụm từ, nói mô tả tranh, đọc hiểu thám tử, kể chuyện | [prompts/05-english-flyers/](prompts/05-english-flyers/) |
+| 🔢 **Toán Lớp 4** | **42** | Cấu tạo số, 4 phép tính, phân số, hình học, diện tích, góc, đổi đơn vị đo, đập chuột 12 lỗ | [prompts/01-toan4/](prompts/01-toan4/) |
+| 📐 **Toán Lớp 5** | **16** | Số thập phân, tỉ số %, chuyển động s = v × t, thể tích khối hộp | [prompts/02-toan5/](prompts/02-toan5/) |
+| 🇬🇧 **Tiếng Anh · Pre A1 Starters** | **11** | Từ vựng nền tảng (Animals, School, Family, Colours), nghe chọn tranh, chính tả, ghép câu, phonics | [prompts/03-english-starters/](prompts/03-english-starters/) |
+| 🌍 **Tiếng Anh · A1 Movers** | **11** | Quá khứ đơn, so sánh hơn/nhất, xây từ, đặt câu hỏi, bộ ba trí nhớ, ôn tổng hợp | [prompts/04-english-movers/](prompts/04-english-movers/) |
+| 🎓 **Tiếng Anh · A2 Flyers** | **11** | Điền từ vào đoạn văn, cụm từ, nói mô tả tranh, đọc hiểu thám tử, kể chuyện | [prompts/05-english-flyers/](prompts/05-english-flyers/) |
 
 Trình độ tiếng Anh chia theo **band Cambridge YLE** (wordlist 2025: 515 từ Starters · +379 Movers · +497 Flyers = **1 391 từ**), cộng từ SGK Việt Nam và số đếm trong `tools/data/yle.mjs` → dải từ tích luỹ **541 / 930 / 1 431**. Mỗi prompt in rõ band, trần từ vựng và 8 cấu trúc ngữ pháp của band; `validate.mjs` chặn câu mẫu dùng từ vượt band. Lớp 4/5 vẫn là metadata của từng game và dòng "Yêu cầu cần đạt" SGK vẫn in nguyên văn để giáo viên đối chiếu.
 
 Ngân hàng dữ liệu mỗi prompt: **Toán tối thiểu 30 mục, Tiếng Anh tối thiểu 60 mục**, chia 3 mức độ, mỗi mục có `answer` + `explanation` + `loiViet` kiểm chứng được bằng code.
 
-### 🕹️ 10 mã điều khiển đang dùng (đếm theo cử chỉ chính của 85 game)
+### 🕹️ 11 mã điều khiển đang dùng (đếm theo cử chỉ chính của 91 game)
 
 | Mã | Học sinh làm gì | Số game |
 |:---|:---|:---:|
@@ -92,23 +92,26 @@ Ngân hàng dữ liệu mỗi prompt: **Toán tối thiểu 30 mục, Tiếng An
 | `GRAB` | Nắm và bắt vật đang rơi / trôi | 12 |
 | `PUNCH` | Vung tay đấm trúng thẻ đáp án | 10 |
 | `SWIPE` | Vuốt / chém qua vật theo quỹ đạo | 9 |
+| `SWAT` | Vụt từ vai xuống bằng cả cánh tay, đập trúng một con trong **12 lỗ** | 6 |
 | `STEP` | Nghiêng người hoặc bước sang vùng trái / phải | 5 |
 | `TWO_HAND_STRETCH` | Khom hai tay căng giãn khoảng cách | 2 |
 | `VOICE` | Nói to câu trả lời (Web Speech API) | 2 |
 | `TWO_HAND_BALANCE` | Hai tay nâng / hạ tạo đòn cân | 1 |
 | `ANGLE_POSE` | Hai cánh tay tạo thành góc có số đo | 1 |
 
-Bốn mã `CLAP`, `PINCH`, `HOLD_POSE`, `FINGER_COUNT` đã định nghĩa trong `tools/data/gestures.mjs` nhưng chưa game nào dùng — dành cho prompt bạn tự viết thêm. Mỗi mã đủ 9 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · bien_do · ar · fallback`; `tools/data/gestures.mjs` còn khai `BANK` (số câu tối thiểu theo môn).
+`SWAT` là họ **đập chuột nhiều đích**: `tools/data/gestures.mjs` khai thêm trường `nhieu_dich` (12 lỗ đánh số 1–12, lưới 4 cột × 3 hàng, mỗi lượt 3–5 con thò, đúng một con mang đáp án đúng, các con kia mang đáp án nhiễu của một lỗi thật, đập hụt không trừ tim). `node tools/validate.mjs` đếm đủ 12 con số trong luật đó và bắt mọi prompt SWAT in nguyên văn.
+
+Bốn mã `CLAP`, `PINCH`, `HOLD_POSE`, `FINGER_COUNT` đã định nghĩa trong `tools/data/gestures.mjs` nhưng chưa game nào dùng — dành cho prompt bạn tự viết thêm. Mỗi mã đủ 9 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · bien_do · ar · fallback` (riêng `SWAT` thêm `nhieu_dich`); `tools/data/gestures.mjs` còn khai `BANK` (số câu tối thiểu theo môn).
 
 ---
 
 ## 🔁 Pipeline: Sửa Dữ Liệu Một Chỗ, Mọi Thứ Dựng Lại
 
 ```text
-tools/data/games.mjs        85 game: tên, gesture, bối cảnh, nhiệm vụ, cụm kiến thức
+tools/data/games.mjs        91 game: tên, gesture, bối cảnh, nhiệm vụ, cụm kiến thức
 tools/data/clusters.mjs     57 cụm kiến thức + nội dung + cách giải thích sư phạm
-tools/data/gestures.mjs     14 mã điều khiển (9 trường) + BANK số câu theo môn
-tools/data/identities.mjs   85 bản sắc riêng: mascot, tính cách, 3 câu thoại, 3 mã hex, khoảnh khắc, đạo cụ AR
+tools/data/gestures.mjs     15 mã điều khiển (9 trường, SWAT thêm nhieu_dich) + BANK số câu theo môn
+tools/data/identities.mjs   91 bản sắc riêng: mascot, tính cách, 3 câu thoại, 3 mã hex, khoảnh khắc, đạo cụ AR
 tools/data/sports.mjs       14 môn thể thao theo mã điều khiển
 tools/data/folk.mjs         14 trò chơi dân gian theo mã điều khiển
 tools/data/standards.mjs    57 dòng chuẩn SGK: mạch, nhãn HUD, khoảng tuần, yêu cầu cần đạt, mẹo nhớ
@@ -119,8 +122,8 @@ tools/data/legacy.mjs       12 prompt đời đầu
         │
         ├─ node tools/build.mjs
         │    ├─ build-catalog.mjs     → catalogs/GAME_CATALOG.csv + .md
-        │    ├─ build-prompts.mjs     → 85 file prompts/01-toan4 · 02-toan5 · 03-english-starters · 04-english-movers · 05-english-flyers
-        │    ├─ build-variants.mjs    → prompts/VARIANTS_425.md (85 × 5 kiểu điều khiển)
+        │    ├─ build-prompts.mjs     → 91 file prompts/01-toan4 · 02-toan5 · 03-english-starters · 04-english-movers · 05-english-flyers
+        │    ├─ build-variants.mjs    → prompts/VARIANTS.md (91 × 5 kiểu điều khiển)
         │    ├─ upgrade-legacy.mjs    → prompts/01..12 legacy (5 mục, ≤15 KB)
         │    ├─ annotate-docs.mjs     → chú thích chuẩn hiện hành vào 5 tài liệu docs/
         │    ├─ build-dashboard.mjs   → catalogs/GAME_CATALOG.js cho index.html
@@ -128,7 +131,10 @@ tools/data/legacy.mjs       12 prompt đời đầu
         │    └─ validate.mjs          → chặn: thiếu 1 mục, thiếu 14 dòng CORE, vượt 15 KB,
         │                               mascot/màu trùng, từ tiếng Anh mẫu vượt band Cambridge,
         │                               chuỗi cấm (${}, Tailwind CDN,
-        │                               @mediapipe/hands, camera_utils, chữ Trung Quốc, TODO)
+        │                               @mediapipe/hands, camera_utils, chữ Trung Quốc, TODO),
+        │                               luật 12 lỗ thiếu 1 trong 12 con số, SWAT không đúng 6 game,
+        │                               số 91/455 in trong README · docs · dashboard lệch dữ liệu,
+        │                               file prompt sót id (game đã xóa/đổi tên), file biến thể tên cũ mang số 425
 tools/lib/core.mjs          ★ 14 dòng ràng buộc cốt lõi — nguồn duy nhất của mọi quy định chung
 tools/lib/csv.mjs           đọc/ghi catalog
 ```
@@ -137,6 +143,8 @@ tools/lib/csv.mjs           đọc/ghi catalog
 node tools/build.mjs      # dựng lại catalog, prompt, biến thể, legacy, dashboard, bảng kiểm rồi tự kiểm
 node tools/validate.mjs   # chỉ kiểm tra
 ```
+
+Quy định mới chỉ có giá trị khi build **thật sự đỏ** nếu ai đó bỏ nó. `tools/probe-mutation.sh` làm việc đó: 15 lần đột biến (sửa "12 lỗ" thành "10 lỗ", xóa `nhieu_dich`, tắt nhánh in luật trong builder, bỏ SWAT khỏi một game, thêm game thứ 92, lùi số 91→85 ở README · prompts/README · docs/README · docs/TEACHER_MODE · bai-07, xóa dòng tra SWAT trong master, để sót file biến thể tên cũ và file prompt của id đã mất…), mỗi lần phải cho exit code khác 0 rồi khôi phục từ bản sao. Chạy trước khi commit một vòng nâng cấp: `cp` các file liên quan sang `/tmp/miti-probe/` rồi `bash tools/probe-mutation.sh`.
 
 ---
 

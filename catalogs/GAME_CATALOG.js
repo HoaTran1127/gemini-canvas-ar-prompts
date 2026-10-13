@@ -817,7 +817,7 @@ window.MITI_CATALOG = {
    "grade": "4",
    "subject": "Toán",
    "objective": "Cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc",
-   "mission": "Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính.",
+   "mission": "Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính; đập hụt thì vụt lại, không trừ tim.",
    "cluster": "cong-tru",
    "topic": "cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc",
    "controls": [
@@ -830,6 +830,26 @@ window.MITI_CATALOG = {
    "bandName": null,
    "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-41-whack-a-mole.md"
+  },
+  {
+   "id": "L4-42",
+   "name": "Đập Nhái Bảng Nhân",
+   "grade": "4",
+   "subject": "Toán",
+   "objective": "Bảng cửu chương 2–9; nhân số có 2–3 chữ số với số có 1 chữ số; nhân nhẩm với 11; nhân với 10 100 1000",
+   "mission": "Vụt tay đập trúng con nhái mang kết quả đúng của bảng nhân; con sai là một lỗi đếm nhóm hay gặp.",
+   "cluster": "nhan",
+   "topic": "bảng cửu chương 2–9; nhân số có 2–3 chữ số với số có 1 chữ số; nhân nhẩm với 11; nhân với 10 100 1000",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
+   "prompt": "prompts/01-toan4/L4-42-multiplication-whack.md"
   },
   {
    "id": "T5-01",
@@ -1144,6 +1164,26 @@ window.MITI_CATALOG = {
    "prompt": "prompts/02-toan5/T5-15-math-strategy-arena.md"
   },
   {
+   "id": "T5-16",
+   "name": "Đập Chuột Hàng Thập Phân",
+   "grade": "5",
+   "subject": "Toán",
+   "objective": "Khái niệm số thập phân; hàng phần mười phần trăm phần nghìn; đọc viết số thập phân; so sánh; làm tròn",
+   "mission": "Vụt tay đập trúng con chuột mang số thập phân đúng với yêu cầu về hàng và chữ số.",
+   "cluster": "thap-phan-khai-niem",
+   "topic": "khái niệm số thập phân; hàng phần mười phần trăm phần nghìn; đọc viết số thập phân; so sánh; làm tròn",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
+   "prompt": "prompts/02-toan5/T5-16-decimal-whack.md"
+  },
+  {
    "id": "ST-01",
    "name": "Nhiệm Vụ Từ Vựng",
    "grade": "4",
@@ -1346,6 +1386,26 @@ window.MITI_CATALOG = {
    "prompt": "prompts/03-english-starters/ST-10-skill-map.md"
   },
   {
+   "id": "ST-11",
+   "name": "Đập Chuột Tranh Từ",
+   "grade": "4",
+   "subject": "Tiếng Anh",
+   "objective": "Nối tranh với từ; kéo thả từ vào chỗ trống theo tranh; nhận diện từ qua hình",
+   "mission": "Vụt tay đập trúng con chuột mang từ tiếng Anh đúng với tranh hoặc nghĩa tiếng Việt đang hiện.",
+   "cluster": "ghep-tranh-tu",
+   "topic": "nối tranh với từ; kéo thả từ vào chỗ trống theo tranh; nhận diện từ qua hình",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-11-picture-whack.md"
+  },
+  {
    "id": "MV-01",
    "name": "Thợ Săn Từ",
    "grade": "5",
@@ -1546,6 +1606,26 @@ window.MITI_CATALOG = {
    "bandName": "A1 Movers",
    "bandCefr": "A1",
    "prompt": "prompts/04-english-movers/MV-10-revision-island.md"
+  },
+  {
+   "id": "MV-11",
+   "name": "Đập Chuột Viết Đúng",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "mission": "Vụt tay đập trúng con chuột mang cách viết đúng chính tả; các con khác mang đúng lỗi hay mắc.",
+   "cluster": "chinh-ta",
+   "topic": "điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-11-spelling-whack.md"
   },
   {
    "id": "FY-01",
@@ -1752,6 +1832,26 @@ window.MITI_CATALOG = {
    "bandName": "A2 Flyers",
    "bandCefr": "A2",
    "prompt": "prompts/05-english-flyers/FY-10-english-cup.md"
+  },
+  {
+   "id": "FY-11",
+   "name": "Đập Chuột Ghép Cụm",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
+   "mission": "Vụt tay đập trúng con chuột mang mảnh từ đúng để ghép kín cụm từ trong câu.",
+   "cluster": "xay-cum-tu",
+   "topic": "ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-11-phrase-whack.md"
   }
  ],
  "legacy": [
@@ -2010,7 +2110,7 @@ window.MITI_CATALOG = {
   {
    "code": "SWAT",
    "vi": "Đập / vụt bằng vật cầm tay (Swat)",
-   "count": 1
+   "count": 6
   }
  ],
  "bands": [
@@ -2021,7 +2121,7 @@ window.MITI_CATALOG = {
    "cefr": "Pre-A1",
    "moTa": "từ nền tảng: danh từ số ít/số nhiều, this/that, There is/are, can, like + V-ing, hiện tại đơn, tính từ sở hữu.",
    "tu": 541,
-   "count": 10
+   "count": 11
   },
   {
    "code": "MV",
@@ -2030,7 +2130,7 @@ window.MITI_CATALOG = {
    "cefr": "A1",
    "moTa": "Starters + quá khứ đơn, so sánh hơn/nhất, will, must/have to, giới từ nơi chốn, đếm được/không đếm được, hiện tại tiếp diễn.",
    "tu": 930,
-   "count": 10
+   "count": 11
   },
   {
    "code": "FY",
@@ -2039,7 +2139,7 @@ window.MITI_CATALOG = {
    "cefr": "A2",
    "moTa": "Movers + hiện tại hoàn thành, bị động, mệnh đề quan hệ, câu điều kiện 1–2, should/might, danh động từ, tường thuật.",
    "tu": 1431,
-   "count": 10
+   "count": 11
   }
  ]
 };

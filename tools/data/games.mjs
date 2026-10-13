@@ -1,12 +1,13 @@
-// Đặc thù 86 game: gesture thay cho MIXED, bối cảnh, mục tiêu, nhiệm vụ, cụm kiến thức.
+// Đặc thù 91 game: gesture thay cho MIXED, bối cảnh, mục tiêu, nhiệm vụ, cụm kiến thức.
 // Đây là nguồn duy nhất để sinh prompt + catalog + dashboard.
 // Gestures tối đa 2 mã: một mechanic chính, mã thứ hai chỉ là thao tác phụ.
-// Hàng Toán: [id, tên, gesture, cluster, bối cảnh, nhiệm vụ].
-// Hàng Tiếng Anh (3 band Cambridge, 10 game/band): thêm [slug cho tên file prompt, topic keys trong
+// Hàng Toán: [id, tên, gesture, cluster, bối cảnh, nhiệm vụ]; game Toán CHƯA có dòng trong
+// GAME_CATALOG.csv cần thêm [slug, topics rỗng, lớp] ở cuối hàng để build-catalog tự sinh đường dẫn prompt.
+// Hàng Tiếng Anh (3 band Cambridge, 11 game/band): thêm [slug cho tên file prompt, topic keys trong
 // YLE_TOPIC_KEYS để lấy dải từ, lớp 4|5 làm metadata đối chiếu SGK]. Band suy ra từ tiền tố id ST-/MV-/FY-.
 
 const G = [
-  // ───────────────── TOÁN 4 (41) ─────────────────
+  // ───────────────── TOÁN 4 (42) ─────────────────
   ['L4-01', 'Đường Đua Hàng Số', 'POINT', 'hang-so', 'Đường đua ba làn trong thành phố số, mỗi làn là một dãy thẻ số.', 'Chỉ ngón tay chọn làn chứa số đúng theo yêu cầu về hàng và giá trị.'],
   ['L4-02', 'Núi Hàng Triệu', 'SWIPE', 'so-sanh-sap-xep', 'Vượt đèo trên dãy núi xếp theo độ cao là giá trị số.', 'Vuốt để đổi thứ tự các toa xe sao cho dãy số tăng dần hoặc giảm dần.'],
   ['L4-03', 'Ném Vòng Làm Tròn', 'PUNCH', 'lam-tron', 'Sân vận tung vòng nơi các số đứng trên vạch tia số.', 'Đấm vào thẻ số đã được làm tròn đúng hàng yêu cầu.'],
@@ -47,9 +48,10 @@ const G = [
   ['L4-38', 'Giải Cứu Góc', 'POINT', 'goc', 'Đội giải cứu mở khóa bằng thước đo góc.', 'Chỉ tay tới nhân vật đang cầm góc đúng loại (nhọn, vuông, tù) và số đo đề bài.'],
   ['L4-39', 'Thám Tử Dữ Liệu', 'POINT', 'bieu-do-cot', 'Văn phòng thám tử với hồ sơ bảng biểu và biểu đồ.', 'Chỉ vào bằng chứng trong bảng hoặc biểu đồ để trả lời từng nghi vấn.'],
   ['L4-40', 'Phòng Boss Toán', 'PUNCH', 'boss-cong-thu', 'Trạm cuối năm, mỗi boss là một chủ đề lớn của Toán 4.', 'Đấm chuỗi đáp án đúng qua ba giai đoạn, mỗi giai đoạn được một lần dùng gợi ý.'],
-  ['L4-41', 'Đập Chuột Thò Đầu', 'SWAT', 'cong-tru', 'Đồng cỏ có 6 lỗ chuột, từng con chuột thò đầu mang một thẻ số.', 'Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính.'],
+  ['L4-41', 'Đập Chuột Thò Đầu', 'SWAT', 'cong-tru', 'Đồng cỏ có 12 hang chuột, mỗi lượt 3–5 con thò đầu mang một thẻ số.', 'Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính; đập hụt thì vụt lại, không trừ tim.'],
+  ['L4-42', 'Đập Nhái Bảng Nhân', 'SWAT', 'nhan', 'Vườn ao 12 hang nhái, mỗi lượt 3–5 con nhái ngoi lên mang thẻ kết quả phép nhân.', 'Vụt tay đập trúng con nhái mang kết quả đúng của bảng nhân; con sai là một lỗi đếm nhóm hay gặp.', 'multiplication-whack', [], 4],
 
-  // ───────────────── TOÁN 5 (15) ─────────────────
+  // ───────────────── TOÁN 5 (16) ─────────────────
   ['T5-01', 'Nhiệm Vụ Phép Tính', 'PUNCH', 'cong-tru', 'Đội đặc nhiệm phá khoá bằng biểu thức nhiều phép tính.', 'Đấm vào bảng khoá mang giá trị đúng của biểu thức, tính theo thứ tự ưu tiên.'],
   ['T5-02', 'Đường Đua Số Thập Phân', 'SWIPE', 'thap-phan-khai-niem', 'Đường đua trên cầu phao, mỗi làn là một số thập phân.', 'Vuốt sang làn chứa số thập phân lớn hơn hoặc bé hơn theo yêu cầu.'],
   ['T5-03', 'Ghép Phân Số – Thập Phân – Phần Trăm', 'DRAG', 'chuyen-dong-f-d-p', 'Bảng xếp hình ba cột: phân số, số thập phân, phần trăm.', 'Kéo thẻ ở hai cột còn lại ghép vào cùng một giá trị với thẻ neo.'],
@@ -65,8 +67,9 @@ const G = [
   ['T5-13', 'Kho Báu Thể Tích', 'POINT+DRAG', 'the-tich', 'Kho báu phong ấn bằng mật mã thể tích.', 'Chỉ vào kích thước đo được rồi kéo khối lập phương kiểm chứng thể tích trước khi mở kho.'],
   ['T5-14', 'Đua Bài Toán Chuyển Động', 'POINT', 'chuyen-dong-de', 'Trạm kiểm soát đường đua với bảng quãng đường – thời gian.', 'Chỉ dữ kiện đúng trên trục thời gian để tính vận tốc hoặc quãng đường còn thiếu.'],
   ['T5-15', 'Đấu Trường Chiến Thuật Toán', 'GRAB+POINT', 'on-tap-toan-5', 'Đấu trường chiến thuật, mỗi lượt phải chọn bài tấn công.', 'Nắm thẻ chiến lược (rút về đơn vị, tỉ số, sơ đồ đoạn thẳng) áp vào đề bài rồi chọn đáp án.'],
+  ['T5-16', 'Đập Chuột Hàng Thập Phân', 'SWAT', 'thap-phan-khai-niem', '12 hang chuột trên cánh đồng số thập phân, mỗi lượt 3–5 con thò đầu mang thẻ số.', 'Vụt tay đập trúng con chuột mang số thập phân đúng với yêu cầu về hàng và chữ số.', 'decimal-whack', [], 5],
 
-  // ───────────────── TIẾNG ANH · PRE A1 STARTERS (10) ─────────────────
+  // ───────────────── TIẾNG ANH · PRE A1 STARTERS (11) ─────────────────
   ['ST-01', 'Nhiệm Vụ Từ Vựng', 'SWIPE', 'tu-vung', 'Bảng từ vựng bay lên như kiếm sĩ chém bảng gỗ.', 'Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý.', 'vocab-quest', ['dong-vat', 'an-uong'], 4],
   ['ST-02', 'Chọn Đáp Án Nghe', 'POINT', 'nghe', 'Loa phát âm thanh, bốn bức tranh ứng bốn lựa chọn.', 'Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe.', 'listen-pick', ['truong-hoc', 'gia-dinh'], 4],
   ['ST-03', 'Ghép Tranh – Từ', 'DRAG', 'ghep-tranh-tu', 'Bảng dán ảnh với các thẻ từ rời.', 'Kéo thẻ từ tiếng Anh thả đúng ô tranh tương ứng.', 'picture-word-match', ['mau-sac', 'co-the'], 4],
@@ -77,8 +80,9 @@ const G = [
   ['ST-08', 'Đập Từ', 'PUNCH', 'tu-vung', 'Găng đấm bốc đập vào bong bóng từ vựng bay ngang.', 'Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng.', 'punch-word', ['an-uong', 'truong-hoc'], 4],
   ['ST-09', 'Nghe Và Phân Loại', 'POINT+DRAG', 'nghe-phan-loai', 'Ba chiếc rổ chủ đề chờ nhận từ bạn vừa nghe.', 'Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó.', 'listen-sort', ['dong-vat', 'mau-sac'], 4],
   ['ST-10', 'Bản Đồ Phiêu Lưu Tiếng Anh', 'POINT', 'dao-kynang', 'Quần đảo năm đảo kỹ năng: từ vựng, nghe, chính tả, câu, phát âm.', 'Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.', 'skill-map', ['dong-vat', 'truong-hoc'], 4],
+  ['ST-11', 'Đập Chuột Tranh Từ', 'SWAT', 'ghep-tranh-tu', '12 hang chuột trong khu rừng từ vựng, mỗi con thò đầu mang một tranh hoặc một thẻ từ.', 'Vụt tay đập trúng con chuột mang từ tiếng Anh đúng với tranh hoặc nghĩa tiếng Việt đang hiện.', 'picture-whack', ['dong-vat', 'mau-sac'], 4],
 
-  // ───────────────── TIẾNG ANH · A1 MOVERS (10) ─────────────────
+  // ───────────────── TIẾNG ANH · A1 MOVERS (11) ─────────────────
   ['MV-01', 'Thợ Săn Từ', 'SWIPE', 'tu-vung', 'Khu rừng từ vựng ẩn trong các bụi cây che phủ.', 'Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.', 'word-hunter', ['dia-diem', 'giao-thong'], 5],
   ['MV-02', 'Trùm Nghe Hiểu', 'POINT', 'nghe', 'Hang động âm thanh, boss phát chuỗi nghe ngày càng dài.', 'Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần.', 'listen-master', ['thoi-gian', 'thoi-tiet'], 5],
   ['MV-03', 'Nhiệm Vụ Điền Chữ', 'POINT', 'chinh-ta', 'Bảng chữ cái mất chữ, nhiệm vụ khôi phục mật thư.', 'Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ.', 'fill-letter', ['so-thich'], 4],
@@ -89,8 +93,9 @@ const G = [
   ['MV-08', 'Bộ Ba Trí Nhớ', 'POINT', 'bo-ba-tri-nho', 'Ba hàng thẻ úp: từ, tranh, nghĩa tiếng Việt.', 'Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng.', 'triple-memory', ['co-the', 'quan-ao'], 5],
   ['MV-09', 'Pháo Đài Chính Tả', 'PUNCH', 'chinh-ta', 'Pháo đài phòng thủ, đạn lỗi chính tả bay tới.', 'Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.', 'spelling-fort', ['gia-dinh'], 5],
   ['MV-10', 'Đảo Ôn Tập', 'POINT', 'on-tap', 'Vòng quanh quần đảo ôn tập tổng hợp kỹ năng tiếng Anh.', 'Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp.', 'revision-island', ['an-uong', 'thoi-tiet'], 5],
+  ['MV-11', 'Đập Chuột Viết Đúng', 'SWAT', 'chinh-ta', '12 hang chuột trong thư viện chữ, mỗi con thò đầu mang một cách viết của cùng một từ.', 'Vụt tay đập trúng con chuột mang cách viết đúng chính tả; các con khác mang đúng lỗi hay mắc.', 'spelling-whack', ['so-thich', 'gia-dinh'], 5],
 
-  // ───────────────── TIẾNG ANH · A2 FLYERS (10) ─────────────────
+  // ───────────────── TIẾNG ANH · A2 FLYERS (11) ─────────────────
   ['FY-01', 'Hẻm Núi Điền Từ', 'DRAG', 'dien-tu-trong-doan-van', 'Hẻm núi với đoạn văn khắc trên đá còn chỗ trống.', 'Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh.', 'canyon-cloze', ['mo-ta', 'dia-diem'], 5],
   ['FY-02', 'Xây Cụm Từ', 'DRAG', 'xay-cum-tu', 'Vườn ươm ghép các mảnh cây thành cụm từ.', 'Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó.', 'phrase-garden', ['so-thich', 'dong-tac'], 5],
   ['FY-03', 'Tuyến Đường Nói', 'VOICE', 'noi', 'Tuyến xe buýt dừng ở năm tình huống giao tiếp.', 'Nói to câu trả lời theo khung câu; micro nhận giọng và chấm từng từ.', 'speaking-route', ['thoi-tiet', 'dia-diem'], 5],
@@ -101,6 +106,7 @@ const G = [
   ['FY-08', 'Đường Đua Nghe', 'STEP', 'nghe', 'Ba làn chạy, mỗi làn mang một đáp án nghe được.', 'Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng.', 'listen-race', ['an-uong', 'thoi-tiet'], 4],
   ['FY-09', 'Phòng Thí Nghiệm Tạo Từ', 'POINT+DRAG', 'xay-cum-tu', 'Phòng thí nghiệm lắp ráp tiền tố hậu tố vào gốc từ.', 'Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại.', 'word-lab', ['dong-tac', 'so-thich'], 5],
   ['FY-10', 'Cúp Thử Thách Tiếng Anh', 'POINT', 'on-tap', 'Sáu trạm thi đấu tranh cúp: nghe, từ vựng, đọc, ngữ pháp, viết, nói.', 'Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn.', 'english-cup', ['truong-hoc', 'nghe-nghiep'], 5],
+  ['FY-11', 'Đập Chuột Ghép Cụm', 'SWAT', 'xay-cum-tu', 'Bến cảng, đàn chuột thò đầu mang từng mảnh của một cụm từ.', 'Vụt tay đập trúng con chuột mang mảnh từ đúng để ghép kín cụm từ trong câu.', 'phrase-whack', ['so-thich', 'dong-tac'], 5],
 ];
 
 export const GAMES = G.map(([id, name, gestures, cluster, setting, mission, slug, topics, lop]) => ({

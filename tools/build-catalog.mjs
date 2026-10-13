@@ -14,7 +14,12 @@ const HEADER = ['id', 'ten_game', 'lop', 'mon', 'band', 'muc_tieu_hoc_tap', 'nhi
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Mạch Tiếng Anh tổ chức theo band Cambridge YLE, không theo lớp.
-const DIR_OF = { ST: 'prompts/03-english-starters', MV: 'prompts/04-english-movers', FY: 'prompts/05-english-flyers' };
+// L4/T5 để game Toán mới tự sinh được đường dẫn prompt mà không phải sửa tay GAME_CATALOG.csv
+// (slug + lop ở cuối hàng trong games.mjs); game Toán cũ vẫn giữ nguyên đường dẫn đã có.
+const DIR_OF = {
+  ST: 'prompts/03-english-starters', MV: 'prompts/04-english-movers', FY: 'prompts/05-english-flyers',
+  L4: 'prompts/01-toan4', T5: 'prompts/02-toan5',
+};
 
 const old = new Map(readCatalog(CSV).map((r) => [r.id, r]));
 
@@ -22,18 +27,19 @@ const rows = GAMES.map((g) => {
   const prev = old.get(g.id) || {};
   const cl = cluster(g.cluster);
   const chuc = (prev.chuc_nang_chinh || '').replace(/^"+|"+$/g, '').replace(/"/g, '');
-  if (g.band && !g.slug) throw new Error('Game band ' + g.id + ' thiếu slug để đặt tên file prompt.');
+  const prefix = g.id.split('-')[0];
+  if (!prev.prompt && !g.slug) throw new Error(`Game mới ${g.id} thiếu slug — thêm slug (và lop với game Toán) vào hàng cuối của games.mjs.`);
   return {
     id: g.id,
     ten_game: g.name,
     lop: g.lop ?? prev.lop,
-    mon: g.band ? 'Tiếng Anh' : prev.mon,
+    mon: g.band ? 'Tiếng Anh' : (prev.mon ?? 'Toán'),
     band: g.band ?? '',
     muc_tieu_hoc_tap: cap(cl.noi_dung),
     nhiem_vu: g.mission,
     dieu_khien: g.rawGestures,
     chuc_nang_chinh: chuc || cl.tags.join('; '),
-    prompt: g.band ? `${DIR_OF[g.band]}/${g.id}-${g.slug}.md` : prev.prompt,
+    prompt: prev.prompt || `${DIR_OF[prefix]}/${g.id}-${g.slug}.md`,
   };
 });
 const thieu = rows.filter((r) => !r.lop || !r.mon || !r.prompt);

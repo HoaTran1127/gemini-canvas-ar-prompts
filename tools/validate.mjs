@@ -94,19 +94,34 @@ const engTokens = (s) => (!s ? [] : /[^\0-\x7f]/.test(s) ? [...String(s).matchAl
   if (la.length) alarms.push(`⚠ ${la.length} từ trong câu mẫu không có trong wordlist Cambridge (tên riêng / lỗi chính tả chủ ý): ${[...new Set(la)].slice(0, 8).join(' · ')}`);
 }
 
-// ── 1. Catalog: đúng 86 dòng, khớp id với tools/data/games.mjs, đường dẫn prompt tồn tại ──
+// ── 0c. SWAT (đập chuột 12 lỗ): luật nhiều đích phải mang đủ con số, không được rỗng ──
+// Con số ở đây là neo: sửa/xóa bất kỳ chuỗi nào trong GESTURES.SWAT.nhieu_dich làm validate đỏ,
+// vì đặc tả 12 lỗ là toàn bộ giá trị của họ game "đập chuột" (3–5 con thò, 1 con đáp án đúng).
+const SWAT_SO = ['12 lỗ', '4 cột × 3 hàng', '3–5 con', 'ĐÚNG MỘT con', '>= 18%', '>= 11%', '>= 2,5 giây', '>= 4 giây', '>= 5 lỗ', '2 lượt liên tiếp', 'KHÔNG trừ tim', 'bộ đếm'];
+const SO_SWAT = 6;
+{
+  const sw = GESTURES.SWAT;
+  if (!sw || !sw.nhieu_dich) bad('GESTURES.SWAT.nhieu_dich rỗng — mất luật đập chuột nhiều đích (12 lỗ).');
+  else for (const s of SWAT_SO) {
+    if (!sw.nhieu_dich.includes(s)) bad(`GESTURES.SWAT.nhieu_dich thiếu con số bắt buộc "${s}".`);
+  }
+  const dangDung = GAMES.filter((g) => g.gestures[0] === 'SWAT');
+  if (dangDung.length !== SO_SWAT) bad(`Phải có đúng ${SO_SWAT} game lấy SWAT làm cơ chế chính, hiện ${dangDung.length} (${dangDung.map((g) => g.id).join(', ')}).`);
+}
+
+// ── 1. Catalog: đúng 91 dòng, khớp id với tools/data/games.mjs, đường dẫn prompt tồn tại ──
 const CAT_REL = 'catalogs/GAME_CATALOG.csv';
 let rows = [];
 if (!exists(CAT_REL)) {
   bad(`Thiếu ${CAT_REL} — chạy \`node tools/build-catalog.mjs\`.`);
 } else {
   rows = readCatalog(path.join(ROOT, CAT_REL));
-  if (rows.length !== 86) bad(`GAME_CATALOG.csv phải có đúng 86 dòng game, hiện ${rows.length}.`);
+  if (rows.length !== 91) bad(`GAME_CATALOG.csv phải có đúng 91 dòng game, hiện ${rows.length}.`);
   const catIds = new Set(rows.map((r) => r.id));
   const gameIds = new Set(GAMES.map((g) => g.id));
   for (const id of gameIds) if (!catIds.has(id)) bad(`Catalog thiếu game ${id} (có trong games.mjs).`);
   for (const id of catIds) if (!gameIds.has(id)) bad(`Catalog có id ${id} không tồn tại trong games.mjs.`);
-  if (GAMES.length !== 86) bad(`games.mjs phải có 86 game, hiện ${GAMES.length}.`);
+  if (GAMES.length !== 91) bad(`games.mjs phải có 91 game, hiện ${GAMES.length}.`);
   for (const r of rows) {
     const idBand = bandOfId(r.id);
     if (r.band !== (idBand ?? '')) bad(`Catalog ${r.id}: cột band "${r.band}" không khớp mã tiền tố id (${idBand ?? 'không có'}).`);
@@ -117,7 +132,7 @@ if (!exists(CAT_REL)) {
     if (!['4', '5'].includes(r.lop)) bad(`Catalog ${r.id}: cột lop phải là 4 hoặc 5, hiện là "${r.lop}".`);
   }
   const soBand = BAND_ORDER.map((b) => rows.filter((r) => r.band === b).length);
-  if (soBand.join('/') !== '10/10/10') bad(`Mỗi band phải có đúng 10 game, hiện ST/MV/FY = ${soBand.join('/')}.`);
+  if (soBand.join('/') !== '11/11/11') bad(`Mỗi band phải có đúng 11 game, hiện ST/MV/FY = ${soBand.join('/')}.`);
 }
 
 // ── 2. Kiểm một prompt theo hợp đồng mới: 5 mục + 14 dòng CORE + trường dữ liệu riêng game ──
@@ -164,7 +179,7 @@ function checkLength(rel, text, where) {
   return b;
 }
 
-// ── 3. 86 prompt game ──
+// ── 3. 91 prompt game ──
 const byId = new Map(rows.map((r) => [r.id, r]));
 const sizeStats = [];
 for (const g of GAMES) {
@@ -233,6 +248,7 @@ for (const g of GAMES) {
     ['{ id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }', 'khuôn QUESTION_DATA'],
     [CORE_SHORT, 'bản rút gọn CORE ở mục tự kiểm'],
   ];
+  if (main && main.nhieu_dich) need.push([main.nhieu_dich, 'luật nhiều đích 12 lỗ (gestures.mjs)']);
   for (const [needle, label] of need) {
     if (!needle) { bad(`${where}: dữ liệu nguồn "${label}" thiếu trong tools/data — không có gì để kiểm.`); continue; }
     if (!text.includes(needle)) bad(`${where}: thiếu ${label} ("${String(needle).slice(0, 52)}…") trong prompt.`);
@@ -259,7 +275,7 @@ for (const g of GAMES) {
   }
 }
 
-// ── 4. Bản sắc riêng: mascot + bảng màu không được trùng giữa 86 game (giữ từ validator cũ) ──
+// ── 4. Bản sắc riêng: mascot + bảng màu không được trùng giữa 91 game (giữ từ validator cũ) ──
 {
   const seenMascot = new Map();
   const seenPalette = new Map();
@@ -281,17 +297,40 @@ for (const rel of ['prompts/00-master-canvas-prompt.md', 'prompts/templates/game
   checkLength(rel, text, rel);
   checkCore(text, rel);
 }
-
-// ── 6. VARIANTS_425.md: đúng 430 block, mỗi block ≤ trần ──
+// master là bảng tra duy nhất cho người tự viết prompt mới: dòng SWAT phải nhắc luật nhiều đích 12 lỗ.
 {
-  const rel = 'prompts/VARIANTS_425.md';
+  const master = read('prompts/00-master-canvas-prompt.md');
+  const dong = master.split('\n').find((l) => l.startsWith('| `SWAT`'));
+  if (!dong) bad('master mất dòng tra `SWAT` trong bảng mã điều khiển.');
+  else if (!dong.includes('nhiều đích') || !dong.includes('12 lỗ')) {
+    bad('master: dòng tra `SWAT` phải nhắc luật nhiều đích 12 lỗ (nguồn GESTURES.SWAT.nhieu_dich ở tools/data/gestures.mjs).');
+  }
+}
+// ── 5b. Không được sót file prompt của game đã xóa/đổi id (probe để rác, về sau改名 cũng vậy) ──
+{
+  const ids = new Set(GAMES.map((g) => g.id));
+  for (const d of ['01-toan4', '02-toan5', '03-english-starters', '04-english-movers', '05-english-flyers']) {
+    const dir = path.join(ROOT, 'prompts', d);
+    if (!exists(`prompts/${d}`)) continue;
+    for (const f of fs.readdirSync(dir)) {
+      const id = f.split('-')[0] + '-' + f.split('-')[1];
+      if (/^L\d|^T\d|^ST|^MV|^FY/.test(f) && !ids.has(id)) bad(`Còn sót prompts/${d}/${f} — id ${id} không có trong tools/data/games.mjs (game đã xóa hay đổi id? xóa file cũ).`);
+    }
+  }
+}
+
+// ── 6. VARIANTS.md: đúng 455 block (91 game × 5 kiểu), mỗi block ≤ trần ──
+{
+  const rel = 'prompts/VARIANTS.md';
   if (!exists(rel)) {
     bad(`Thiếu ${rel} — chạy \`node tools/build-variants.mjs\`.`);
+  } else if (exists('prompts/VARIANTS_425.md')) {
+    bad('Còn sót prompts/VARIANTS_425.md (tên cũ mang số 425 đã lệch thực tế) — xóa file cũ, bản sinh mới là prompts/VARIANTS.md.');
   } else {
     const text = read(rel);
     const parts = text.split(/^## Prompt /m);
     const blocks = parts.slice(1);
-    if (blocks.length !== 430) bad(`${rel}: phải có đúng 430 block "## Prompt NNN", hiện ${blocks.length}.`);
+    if (blocks.length !== 455) bad(`${rel}: phải có đúng 455 block "## Prompt NNN", hiện ${blocks.length}.`);
     blocks.forEach((b, i) => {
       const size = bytes(b);
       if (size > MAX_BYTES) {
@@ -310,10 +349,33 @@ for (const l of LEGACY) {
   checkCore(text, `legacy ${l.id} (${l.file})`);
 }
 
-// ── 8. Tổng kết đo được ──
+// ── 8. Tài liệu dẫn đường: số ghi trong README/dashboard/docs phải khớp dữ liệu hiện hành.
+//hai lần thư viện lệch số vì README giữ nguyên con số của vòng trước; từ giờ thêm game mà
+//quên sửa tài liệu là build đỏ ngay ở đây (tên file biến thể cũng không còn mang số).
+{
+  const soBlock = GAMES.length * 5;
+  const CAN_BIEN = [
+    ['README.md', [`Thư Viện ${GAMES.length} Prompt Game`, `| **${GAMES.length}** |`, `| **${soBlock}** | [prompts/VARIANTS.md]`]],
+    ['prompts/README.md', [`**${GAMES.length} prompt game chuẩn**`, `**${GAMES.length} game × 5 kiểu điều khiển = ${soBlock} block**`, `Mở ${soBlock} Prompt Variants](VARIANTS.md)`, `dựng catalog, ${GAMES.length} prompt, ${soBlock} biến thể`]],
+    ['index.html', ['href="prompts/VARIANTS.md"']],
+    ['docs/README.md', [`${soBlock} biến thể điều khiển ở \`prompts/VARIANTS.md\``, `Dashboard ${GAMES.length} prompt + 12 legacy`, `${GAMES.length} prompt game chuẩn + 12 prompt legacy`, `${GAMES.length} prompt trong \`prompts/\``]],
+    ['docs/TEACHER_MODE.md', [`${GAMES.length} worlds trong \`tools/data/games.mjs\``]],
+    ['docs/bai-07-huong-dan-tu-tao-mini-game-moi.md', [`**${GAMES.length} prompt game chuẩn**`]],
+  ];
+  for (const [rel, needles] of CAN_BIEN) {
+    if (!exists(rel)) { bad(`Thiếu ${rel}.`); continue; }
+    const text = read(rel);
+    if (text.includes('VARIANTS_425')) bad(`${rel}: còn trỏ tên cũ VARIANTS_425.md — bản sinh mới là prompts/VARIANTS.md.`);
+    for (const nd of needles) {
+      if (!text.includes(nd)) bad(`${rel}: số liệu lệch thực tế — không thấy "${nd}" (thư viện hiện ${GAMES.length} game, ${soBlock} block).`);
+    }
+  }
+}
+
+// ── 9. Tổng kết đo được ──
 const total = sizeStats.reduce((s, x) => s + x.b, 0);
 const max = sizeStats.reduce((m, x) => (x.b > m.b ? x : m), { rel: '-', b: 0 });
-console.log(`Đo 86 prompt game: ${sizeStats.length} file đã đọc, tổng ${total.toLocaleString('vi')} byte, `
+console.log(`Đo ${GAMES.length} prompt game: ${sizeStats.length} file đã đọc, tổng ${total.toLocaleString('vi')} byte, `
   + `trung bình ${sizeStats.length ? Math.round(total / sizeStats.length).toLocaleString('vi') : 0} byte/file, `
   + `lớn nhất ${max.b.toLocaleString('vi')} byte (${max.rel}). Trần ${MAX_BYTES} byte.`);
 console.log('Theo nhóm: ' + [...new Set(sizeStats.map((x) => x.nhom))].map((n) => {
@@ -329,4 +391,4 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game (CORE ${CORE.split('\n').length} dòng), `
-  + 'master + template, VARIANTS 430 block, ' + LEGACY.length + ' prompt legacy.');
+  + `master + template, VARIANTS ${GAMES.length * 5} block, ` + LEGACY.length + ' prompt legacy.');

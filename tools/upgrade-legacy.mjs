@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { LEGACY } from './data/legacy.mjs';
+import { GAMES } from './data/games.mjs';
 import { CORE, CORE_TITLE, CORE_SHORT } from './lib/core.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -255,7 +256,7 @@ const render = (l) => {
   return `# ${l.id} — ${l.name}
 
 > ${l.mon} lớp ${l.lop} · Điều khiển: ${l.gestures} · Model: ${model}
-> **LEGACY (${l.id})** — ${l.mo_ta} Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; 85 prompt đặc thù: \`catalogs/GAME_CATALOG.csv\`.
+> **LEGACY (${l.id})** — ${l.mo_ta} Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; ${GAMES.length} prompt đặc thù: \`catalogs/GAME_CATALOG.csv\`.
 > Prompt độc lập: copy nguyên khối \`text\` bên dưới dán vào **Google Gemini (bật chế độ Canvas)**. Không cần repo này.
 
 \`\`\`text

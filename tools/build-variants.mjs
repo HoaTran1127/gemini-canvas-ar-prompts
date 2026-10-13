@@ -1,4 +1,6 @@
-// Sinh prompts/VARIANTS_425.md — 86 game × 5 biến thể điều khiển = 430 block.
+// Sinh prompts/VARIANTS.md — 91 game × 5 biến thể điều khiển = 455 block.
+// Tên file không mang số nữa (VARIANTS_425.md từng ghi 425 khi thực tế đã 430): số đúng
+// luôn là SO_GAME × 5 ở dưới, đổi một chỗ là header + chốt kiểm theo hết.
 // Mỗi block = Ý TƯỞNG + MỤC TIÊU + một khối RÀNG BUỘC CỐT LÕI 14 dòng (tools/lib/core.mjs)
 // + ngân hàng dữ liệu + tự kiểm tra. Không import 26 module quy định chung cũ.
 // Trần: 15.000 byte / block. Chạy độc lập: `node tools/build-variants.mjs`.
@@ -18,7 +20,7 @@ import { CORE, CORE_TITLE, CORE_SHORT } from './lib/core.mjs';
 import { bandMeta, structureFor, wordsFor } from './data/yle.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
+const OUT = path.join(ROOT, 'prompts', 'VARIANTS.md');
 const BYTE_CAP = 15000;
 
 // 5 biến thể điều khiển cho CÙNG một game: cùng thế giới, cùng ngân hàng dữ liệu, khác mỗi cách chốt đáp án.
@@ -79,7 +81,7 @@ Tạo game giáo dục web "${g.name.toUpperCase()}" cho học sinh Việt Nam l
 1. Ý TƯỞNG
 - Bối cảnh: ${g.setting}
 - Việc của học sinh mỗi lượt: ${g.mission}
-${controlLines(v)}
+${controlLines(v)}${GESTURES[g.gestures[0]].nhieu_dich ? `\n- Luật nhiều đích (giữ nguyên dù đổi cách chốt đáp án): ${GESTURES[g.gestures[0]].nhieu_dich}` : ''}
 - Mascot **${it.mascot}** (${it.tinhCach}) — khen "${it.lines[0]}", hô mở đầu "${it.lines[2]}". Bảng màu: \`--miti-1: ${it.palette[0]}\` (vật thể AR), \`--miti-2: ${it.palette[1]}\` (particle, viền hit), \`--miti-3: ${it.palette[2]}\` (HUD).
 - Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **${sp.mon}** ("${sp.dongTac}", hạ nhiệt "${sp.duoiCo}") · dân gian **${fk.tro}** (đồ dùng AR "${fk.doDung}") · khoảnh khắc chữ ký ${it.signature} · đạo cụ AR neo vào người chơi "${it.prop}".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
@@ -119,19 +121,21 @@ ${CORE}
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
 const byId = new Map(GAMES.map((g) => [g.id, g]));
-if (rows.length !== 86) throw new Error(`Cần đúng 86 game để sinh biến thể, catalog có ${rows.length}.`);
+const SO_GAME = 91;
+const SO_BLOCK = SO_GAME * VARIANTS.length;
+if (rows.length !== SO_GAME) throw new Error(`Cần đúng ${SO_GAME} game để sinh biến thể, catalog có ${rows.length}.`);
 
-let out = `# 🎯 430 PROMPT BIẾN THỂ — MiTi (86 game × 5 kiểu điều khiển)
+let out = `# 🎯 ${SO_BLOCK} PROMPT BIẾN THỂ — MiTi (${SO_GAME} game × 5 kiểu điều khiển)
 
 > **File này do \`tools/build-variants.mjs\` sinh ra từ \`tools/data/*\` + khối ràng buộc cốt lõi \`tools/lib/core.mjs\`.** Muốn đổi nội dung thì sửa dữ liệu hoặc CORE rồi chạy \`node tools/build-variants.mjs\`, đừng sửa tay.
 >
-> 86 game trong catalog × 5 biến thể điều khiển = **430 prompt độc lập**. Mỗi block \`## Prompt NNN\` copy nguyên khối \`text\` bên trong là dán được vào **Google Gemini → chế độ Canvas** ra một game 1 file HTML.
+> ${SO_GAME} game trong catalog × 5 biến thể điều khiển = **${SO_BLOCK} prompt độc lập**. Mỗi block \`## Prompt NNN\` copy nguyên khối \`text\` bên trong là dán được vào **Google Gemini → chế độ Canvas** ra một game 1 file HTML.
 >
 > Năm biến thể: **V1 CAMERA POINT** (chỉ ngón trỏ) · **V2 CAMERA SWIPE** (vuốt chém) · **V3 DRAG & GRAB** (kéo thả) · **V4 VOICE** (nói to đáp án) · **V5 NO-CAMERA** (phím + chuột). Cùng một thế giới và cùng một ngân hàng dữ liệu, chỉ khác cách chốt đáp án.
 >
 > Mỗi prompt gồm 5 mục gọn: **1. Ý TƯỞNG** (bối cảnh, nhân vật, cách chơi biến thể) · **2. MỤC TIÊU HỌC TẬP** (cụm kiến thức + chuẩn SGK, với game tiếng Anh là band Cambridge ST/MV/FY) · **3. RÀNG BUỘC CỐT LÕI** (14 dòng, bản nén của toàn bộ quy định chung — như nhau ở mọi block) · **4. NGÂN HÀNG DỮ LIỆU** · **5. TỰ KIỂM TRA**. Trần 15.000 byte / block.
 >
-> Ràng buộc cốt lõi đầy đủ chỉ có trong \`tools/lib/core.mjs\` — sửa một dòng là đổi cả 430 block. Bảng game + copy nhanh: \`index.html\` hoặc \`catalogs/GAME_CATALOG.md\`.
+> Ràng buộc cốt lõi đầy đủ chỉ có trong \`tools/lib/core.mjs\` — sửa một dòng là đổi cả ${SO_BLOCK} block. Bảng game + copy nhanh: \`index.html\` hoặc \`catalogs/GAME_CATALOG.md\`.
 
 `;
 
@@ -153,12 +157,12 @@ for (const row of rows) {
   }
 }
 
-if (n !== 430) throw new Error(`Số block biến thể là ${n}, phải là 430.`);
+if (n !== SO_BLOCK) throw new Error(`Số block biến thể là ${n}, phải là ${SO_BLOCK}.`);
 fs.writeFileSync(OUT, out, 'utf8');
 
 const totalBytes = bytes(out);
 console.log(
-  `Đã sinh ${n} block biến thể (86 game × 5 kiểu điều khiển) vào prompts/${path.basename(OUT)}.
+  `Đã sinh ${n} block biến thể (${SO_GAME} game × 5 kiểu điều khiển) vào prompts/${path.basename(OUT)}.
   byte trung bình/block : ${Math.round(totalBlockBytes / n)}
   block lớn nhất        : ${maxBytes} byte (${maxId})  [trần ${BYTE_CAP}]
   tổng dung lượng file  : ${(totalBytes / 1024 / 1024).toFixed(2)} MB (${totalBytes} byte)`,

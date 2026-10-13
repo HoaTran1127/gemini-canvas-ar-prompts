@@ -32,8 +32,8 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
   </div>
   <nav class="links">
     <a class="ghost" href="prompts/00-master-canvas-prompt.md">Master prompt</a>
-    <a class="ghost" href="catalogs/GAME_CATALOG.md">Danh mục 85 game</a>
-    <a class="ghost" href="prompts/VARIANTS_425.md">425 biến thể</a>
+    <a class="ghost" href="catalogs/GAME_CATALOG.md" id="catalogLink">Danh mục game</a>
+    <a class="ghost" href="prompts/VARIANTS.md" id="variantsLink">Biến thể điều khiển</a>
     <a class="ghost" href="prompts/BRAND_MITI.md">Chuẩn MiTi</a>
   </nav>
 </header>
@@ -64,7 +64,7 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
       <div class="tinyStat"><strong id="legacyGames">—</strong><span>prompt legacy</span></div>
       <div class="tinyStat"><strong id="controlKinds">—</strong><span>kiểu điều khiển</span></div>
       <div class="tinyStat"><strong id="bandKinds">—</strong><span>band Cambridge (Starters · Movers · Flyers)</span></div>
-      <div class="tinyStat"><strong>425</strong><span>biến thể (85 game × 5 kiểu)</span></div>
+      <div class="tinyStat"><strong id="variantCount">—</strong><span>biến thể (số game × 5 kiểu điều khiển)</span></div>
     </div>
   </aside>
 </section>
@@ -156,6 +156,10 @@ $('realGames').textContent = CAT.games.length;
 $('legacyGames').textContent = CAT.legacy.length;
 $('controlKinds').textContent = CAT.controls.length;
 $('bandKinds').textContent = (CAT.bands || []).length;
+// Số đếm ở nav + ô thống kê lấy từ catalog, không ghi tay: thêm game là số tự đổi.
+$('catalogLink').textContent = 'Danh mục ' + CAT.games.length + ' game';
+$('variantsLink').textContent = (CAT.games.length * 5) + ' biến thể';
+$('variantCount').textContent = CAT.games.length * 5;
 document.querySelector('[data-tab="legacy"]').textContent = 'Prompt legacy (' + CAT.legacy.length + ')';
 (CAT.bands || []).forEach((b) => {
   const t = document.querySelector('.tab[data-tab="band|' + b.code + '"]');

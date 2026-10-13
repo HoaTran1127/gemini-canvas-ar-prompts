@@ -62,10 +62,15 @@ function render(c) {
   const vocab = english
     ? [...new Set(g.topics.flatMap((t) => topicWords(t, c.band)))]
     : [];
+  // Prompt band tiếng Anh vốn đã sát trần 15 KB; game nhiều đích phải dành chỗ cho luật 12 lỗ
+  // (mọi con số kiểm được vẫn nằm nguyên), nên riêng 3 prompt đó rút phần tham khảo: dải từ mẫu
+  // ngắn hơn, cấu trúc ngữ pháp giữ tên còn ví dụ suy từ tools/data/yle.mjs + master prompt.
+  const thatLich = english && !!main.nhieu_dich;
+  const soTuMau = thatLich ? 5 : 20;
   const bandBlock = english
-    ? `- Band Cambridge: **${bm.ten}** (${bm.cefr}) — ${bm.moTa}
-- Trần từ vựng: chỉ dùng ${wordsFor(c.band).size} từ thuộc ${bm.tukhoa} trở xuống, ưu tiên ${vocab.length} từ của chủ đề ${g.topics.map((t) => YLE_TOPIC_VI[t] ?? t).join(', ')}: ${vocab.slice(0, 20).join(', ')}${vocab.length > 20 ? ', …' : ''}. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở ${gradeTxt}.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của ${bm.tukhoa} — ${structureFor(c.band).map(([t, m]) => `${t} ("${String(m).split(' / ')[0]}")`).join(' · ')}.`
+    ? `- Band Cambridge: **${bm.ten}** (${bm.cefr})${thatLich ? '' : ` — ${bm.moTa}`}
+- Trần từ vựng: chỉ dùng ${wordsFor(c.band).size} từ thuộc ${bm.tukhoa} trở xuống, ưu tiên ${vocab.length} từ của chủ đề ${g.topics.map((t) => YLE_TOPIC_VI[t] ?? t).join(', ')}: ${vocab.slice(0, soTuMau).join(', ')}${vocab.length > soTuMau ? ', …' : ''}. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở ${gradeTxt}.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của ${bm.tukhoa} — ${structureFor(c.band).map(([t, m]) => thatLich ? t : `${t} ("${String(m).split(' / ')[0]}")`).join(' · ')}.`
     : null;
   const noteBand = english
     ? '- Band Cambridge: `' + c.band + '` (' + bm.ten + ') — đổi band thì phải đổi cả thư mục prompt, `EXAMPLES_YLE` và dải từ trong `tools/data/yle.mjs`.\n'
@@ -85,9 +90,9 @@ Tạo game giáo dục web "${g.name.toUpperCase()}" cho học sinh Việt Nam l
 - Bối cảnh: ${g.setting}
 - Việc của học sinh mỗi lượt: ${g.mission}
 - Điều khiển: ${main.vi}. ${main.landmark} Biên độ động tác: ${main.bien_do}
-- Không có camera thì ${main.fallback}.
+- Không có camera thì ${main.fallback}.${main.nhieu_dich ? `\n- Luật nhiều đích: ${main.nhieu_dich}` : ''}
 - Mascot **${it.mascot}** (${it.tinhCach}) — khen "${it.lines[0]}", hô mở đầu "${it.lines[2]}". Bảng màu: \`--miti-1: ${it.palette[0]}\` (vật thể AR), \`--miti-2: ${it.palette[1]}\` (particle, viền hit), \`--miti-3: ${it.palette[2]}\` (HUD).
-- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **${sp.mon}** ("${sp.dongTac}", hạ nhiệt "${sp.duoiCo}") · dân gian **${fk.tro}** (đồ dùng AR "${fk.doDung}") · khoảnh khắc chữ ký ${it.signature} · đạo cụ AR neo vào người chơi "${it.prop}".
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **${sp.mon}** (${thatLich ? `hạ nhiệt "${sp.duoiCo}"` : `"${sp.dongTac}", hạ nhiệt "${sp.duoiCo}"`}) · dân gian **${fk.tro}** (đồ dùng AR "${fk.doDung}") · khoảnh khắc chữ ký ${it.signature} · đạo cụ AR neo vào người chơi "${it.prop}".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
@@ -110,7 +115,9 @@ ${CORE}
 - Khai báo \`const QUESTION_DATA = [...]\` ở ĐẦU khối <script>, engine đặt phía sau.
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu ${bank.so} mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
-- ${bank.luu_y}${english ? `\n- Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của ${bm.tukhoa}; level 3 vẫn nằm trong ${bm.tukhoa}, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.` : ''}
+- ${bank.luu_y}${english ? `\n- Chia mức theo band: ${thatLich
+      ? `level 1 lấy từ và cấu trúc cơ bản nhất của ${bm.tukhoa}; level 3 vẫn nằm trong ${bm.tukhoa}, tăng độ khó bằng câu dài hơn chứ không bằng từ ngoài band.`
+      : `level 1 lấy từ và cấu trúc cơ bản nhất của ${bm.tukhoa}; level 3 vẫn nằm trong ${bm.tukhoa}, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.`}` : ''}
 - errorTag là mã máy của lỗi, lấy đúng một trong: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: ${cl.giai_thich}.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
@@ -119,7 +126,9 @@ ${CORE}
 ${jsonBlock(ex, cl.tags, errList.split('; '))}
 
 5. TỰ KIỂM TRA TRƯỚC KHI XUẤT
-- Chạy ${CORE_SHORT}. Riêng ngân hàng: đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet, không trùng câu, không ra ngoài ${gradeTxt}${english ? ` và band ${bm.tukhoa} (so lại từng từ tiếng Anh trong đề và phương án với danh sách ${wordsFor(c.band).size} từ ở mục 2, từ nào ngoài danh sách thì thay bằng từ trong danh sách)` : ''}; câu sai vào hàng đợi luyện lại trong cùng phiên.
+- Chạy ${CORE_SHORT}. Riêng ngân hàng: đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet, không trùng câu, không ra ngoài ${gradeTxt}${english ? ` và band ${bm.tukhoa}${thatLich
+      ? ` (so từng từ trong đề và phương án với ${wordsFor(c.band).size} từ ở mục 2, từ nào ngoài thì thay bằng từ trong danh sách)`
+      : ` (so lại từng từ tiếng Anh trong đề và phương án với danh sách ${wordsFor(c.band).size} từ ở mục 2, từ nào ngoài danh sách thì thay bằng từ trong danh sách)`}` : ''}; câu sai vào hàng đợi luyện lại trong cùng phiên.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)

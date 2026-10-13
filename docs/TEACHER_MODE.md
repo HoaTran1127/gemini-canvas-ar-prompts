@@ -6,7 +6,7 @@ Tài liệu thiết kế cho **teacher mode**: cô chọn world/skill, giao nhi�
 ## 1. Nguyên tắc thiết kế
 
 1. **Tái dùng, không phát minh lại.** Repo đã có sẵn mọi dữ liệu teacher mode cần:
-   - 85 worlds trong `tools/data/games.mjs` (id, tên, gesture, cụm kiến thức).
+   - 91 worlds trong `tools/data/games.mjs` (id, tên, gesture, cụm kiến thức).
    - Bảng chuẩn `tools/data/standards.mjs`: mỗi cụm có mạch kiến thức, nhãn ngắn,
      khoảng tuần `[tuan]` dạy trong năm học 35 tuần, "yêu cầu cần đạt" nguyên văn.
    - Thư viện lỗi `tools/data/clusters.mjs`: mỗi cụm có `errorTag` để game nhóm
@@ -113,7 +113,7 @@ Sổ theo dõi của cô (ngoài repo)
 ## 7. Đã xác minh / [Chưa xác minh]
 
 **Đã xác minh:**
-- 85 worlds trong `tools/data/games.mjs`; mọi cluster đều có mặt trong
+- 91 worlds trong `tools/data/games.mjs`; mọi cluster đều có mặt trong
   `tools/data/standards.mjs` (kiểm bằng script: 57/57 cụm khớp).
 - Cấu trúc màn tổng kết (3 thẻ, nhóm lỗi theo errorTag) và khối "Gửi bố mẹ"
   có thật trong prompt game (kiểm file `prompts/01-toan4/L4-01-number-dash.md`:

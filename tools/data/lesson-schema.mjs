@@ -4,7 +4,7 @@
 //   - KHÔNG sửa engine game, KHÔNG sửa CORE lines (tools/lib/core.mjs),
 //   - KHÔNG thu video/ảnh học sinh (mọi báo cáo đều đọc từ màn hình game).
 // Mọi kiểm tra đều dựa trên dữ liệu sẵn có của repo:
-//   - tools/data/games.mjs     (85 worlds: id, tên, gesture, cluster)
+//   - tools/data/games.mjs     (id, tên, gesture, cluster của mọi world)
 //   - tools/data/standards.mjs (STANDARDS: mạch, nhãn ngắn, khoảng tuần [tuan])
 //   - tools/data/clusters.mjs  (errorTag để nhóm lỗi ở màn tổng kết)
 //
@@ -42,7 +42,7 @@ export const LESSON_SCHEMA = {
   tuan: 'số nguyên 1–35, bắt buộc — tuần học trong phân phối chương trình',
   mon: '"Toán" | "Tiếng Anh", bắt buộc — phải khớp môn của mọi worldIds',
   lop: '4 | 5, bắt buộc — phải khớp lớp của mọi worldIds',
-  worldIds: 'mảng id game không rỗng, bắt buộc — mỗi id phải có trong 85 worlds của catalog',
+  worldIds: 'mảng id game không rỗng, bắt buộc — mỗi id phải có trong catalogs/GAME_CATALOG.csv',
   skills: 'mảng cụm kiến thức (key trong STANDARDS), tùy chọn — bỏ trống thì tự suy từ worldIds',
   durationMinutes: 'số nguyên 5–45, bắt buộc — tổng thời lượng buổi học (mỗi game ≈ 10 phút/phiên)',
   difficulty: '1 | 2 | 3, bắt buộc — 1=dễ, 2=trung bình, 3=khó (khớp level 1/2/3 trong ngân hàng câu hỏi của game)',
@@ -76,7 +76,7 @@ export function validateLesson(plan) {
     for (const id of plan.worldIds) {
       const g = GAME_BY_ID.get(id);
       if (!g) {
-        loi.push(`"worldIds" có id lạ: "${id}" (không có trong 85 worlds của catalog).`);
+        loi.push(`"worldIds" có id lạ: "${id}" (không có trong catalogs/GAME_CATALOG.csv).`);
         continue;
       }
       const monG = monCuaGame(id);

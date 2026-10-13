@@ -1,7 +1,8 @@
 # 📚 Series Hướng Dẫn Tự Phát Triển Game Toán Thực Tế Ảo (AR Math Games) Cho Học Sinh Lớp 4 & 5
 
 > **⚠️ Cập nhật chuẩn MiTi (2026-10)** — bài này vẫn đúng về ý tưởng, nhưng ba phụ thuộc đã đổi: **Tone.js → Web Audio API tự tổng hợp**, **MediaPipe Hands legacy → MediaPipe Tasks Vision pin `@1.0.1`** (vision_bundle.mjs + wasm + hand_landmarker.task), **Tailwind Play CDN → CSS nội tuyến một khối `<style>`**.
-> Bản chuẩn để viết prompt cho Gemini Canvas: `prompts/00-master-canvas-prompt.md` — khung 5 mục (Ý TƯỞNG · MỤC TIÊU HỌC TẬP · RÀNG BUỘC CỐT LÕI · NGÂN HÀNG DỮ LIỆU · TỰ KIỂM TRA), trần 15 KB mỗi prompt. Mọi quy định dùng chung nằm trong 14 dòng `CORE_LINES` ở `tools/lib/core.mjs`; 425 biến thể điều khiển ở `prompts/VARIANTS_425.md`.
+> Bản chuẩn để viết prompt cho Gemini Canvas: `prompts/00-master-canvas-prompt.md` — khung 5 mục (Ý TƯỞNG · MỤC TIÊU HỌC TẬP · RÀNG BUỘC CỐT LÕI · NGÂN HÀNG DỮ LIỆU · TỰ KIỂM TRA), trần 15 KB mỗi prompt. Mọi quy định dùng chung nằm trong 14 dòng `CORE_LINES` ở `tools/lib/core.mjs`; 455 biến thể điều khiển ở `prompts/VARIANTS.md`.
+> Game `SWAT` (đập chuột) có `nhieu_dich` trong `tools/data/gestures.mjs`: 12 lỗ, mỗi lượt 3–5 con thò, ĐÚNG MỘT con mang đáp án đúng, đập hụt không trừ tim.
 > Bài viết dưới đây mô tả kiến trúc cũ (nhiều module `tools/lib/*`, prompt dài hàng trăm KB), nên đọc để hiểu cơ chế chứ không copy cấu trúc. Mã nguồn demo trong `games/` là bản cũ, chưa theo hợp đồng AR này.
 
 
@@ -28,8 +29,8 @@ Chào mừng thầy cô, phụ huynh và các bạn đam mê lập trình sáng 
 Dự án được thiết kế theo tư duy **Module hóa (Pluggable)** để sau này bạn có thể thêm bớt chủ đề toán học hoặc thêm mini-game mới cực kỳ dễ dàng:
 
 ```text
-├── index.html                   # Dashboard 85 prompt + 12 legacy (lọc, tìm, 1-click copy)
-├── prompts/                     # 85 prompt game chuẩn + 12 prompt legacy + master + biến thể
+├── index.html                   # Dashboard 91 prompt + 12 legacy (lọc, tìm, 1-click copy)
+├── prompts/                     # 91 prompt game chuẩn + 12 prompt legacy + master + biến thể
 ├── catalogs/                    # GAME_CATALOG.csv · .md · .js — sinh từ tools/data
 ├── tools/                       # Pipeline build: node tools/build.mjs
 ├── src/
@@ -49,7 +50,7 @@ Dự án được thiết kế theo tư duy **Module hóa (Pluggable)** để sa
     └── english-word-ninja/      # Demo 4: Chém từ vựng tiếng Anh
 ```
 
-> **Giáo trình này dạy đường "tự code" nhiều file.** 85 prompt trong `prompts/` đi đường khác: Gemini xuất **một file HTML duy nhất, CSS nội tuyến**, không nạp `src/core/*.js`. `src/data/*.js` cũng là **bộ sinh câu hỏi**, không phải ngân hàng `QUESTION_DATA` mà prompt yêu cầu. Xem rõ ở [bai-07](bai-07-huong-dan-tu-tao-mini-game-moi.md).
+> **Giáo trình này dạy đường "tự code" nhiều file.** 91 prompt trong `prompts/` đi đường khác: Gemini xuất **một file HTML duy nhất, CSS nội tuyến**, không nạp `src/core/*.js`. `src/data/*.js` cũng là **bộ sinh câu hỏi**, không phải ngân hàng `QUESTION_DATA` mà prompt yêu cầu. Xem rõ ở [bai-07](bai-07-huong-dan-tu-tao-mini-game-moi.md).
 
 ---
 

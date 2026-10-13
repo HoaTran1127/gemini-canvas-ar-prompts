@@ -9,12 +9,13 @@ Tạo game giáo dục web "ĐẬP CHUỘT THÒ ĐẦU" cho học sinh Việt Na
 ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
 
 1. Ý TƯỞNG
-- Bối cảnh: Đồng cỏ có 6 lỗ chuột, từng con chuột thò đầu mang một thẻ số.
-- Việc của học sinh mỗi lượt: Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính.
+- Bối cảnh: Đồng cỏ có 12 hang chuột, mỗi lượt 3–5 con thò đầu mang một thẻ số.
+- Việc của học sinh mỗi lượt: Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính; đập hụt thì vụt lại, không trừ tim.
 - Điều khiển: Đập / vụt bằng vật cầm tay (Swat). HandLandmarker; cổ tay (landmark 0) và đầu ngón giữa (landmark 12) để tính hướng và tốc độ vụt của đầu vật. Biên độ động tác: Vụt từ vai xuống bằng cả cánh tay, tay cầm cuộn báo/vợt đập ruồi hoặc tay không; đầu vật đi quãng dài tới mục tiêu và đổi hướng vụt giữa các lượt, không phải cú hất cổ tay ngay trước mặt.
 - Không có camera thì click nhanh vào mục tiêu để mô phỏng cú đập.
+- Luật nhiều đích: 12 lỗ đánh số 1–12, lưới 4 cột × 3 hàng, hai lỗ kề cách nhau >= 18% bề rộng khung, vùng chạm mỗi lỗ >= 11%. Mỗi lượt thò đồng thời 3–5 con, ĐÚNG MỘT con mang đáp án đúng, con khác mang đáp án nhiễu từ một lỗi thật. Con thò giữ thẻ cao >= 2,5 giây mới rụt, con đúng ở lại >= 4 giây (nút "Chơi chậm lại" nhân đôi). >= 3 lỗ ngang đầu trở lên, >= 3 lỗ dưới đầu gối, >= 2 lỗ sát mỗi mép — mỗi lượt là một lần với tay hoặc khuỵu chân. Đáp án đúng rải ở >= 5 lỗ khác nhau/phiên, không lặp cùng lỗ quá 2 lượt liên tiếp. Đập hụt KHÔNG trừ tim, vẫn tính vào bộ đếm "<n> động tác", mascot nhắc "hụt rồi, ngắm lại nào"; trúng con sai trừ 1 tim, dừng 2 giây hiện lời giải rồi cả đàn rụt.
 - Mascot **Cu Tị** (nhanh tay, mê rình chuột thò đầu) — khen "Vụt trúng rồi, giỏi quá!", hô mở đầu "Chuột lên, một hai ba vụt!". Bảng màu: `--miti-1: #7F4F24` (vật thể AR), `--miti-2: #A7C957` (particle, viền hit), `--miti-3: #F2E8CF` (HUD).
-- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Cầu lông** ("Vụt vợt đập cầu", hạ nhiệt "Duỗi vai và cánh tay") · dân gian **Đánh khăng** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký sáu lỗ chuột cùng sáng đèn rồi con chuột mang đáp án đúng giơ cao thẻ số · đạo cụ AR neo vào người chơi "vợt đập ruồi neon buộc sau vai phải, vẫy mạnh khi chuỗi đúng đạt 3".
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Cầu lông** ("Vụt vợt đập cầu", hạ nhiệt "Duỗi vai và cánh tay") · dân gian **Đánh khăng** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký mười hai lỗ chuột cùng sáng đèn theo hàng rồi con chuột mang đáp án đúng giơ cao thẻ số · đạo cụ AR neo vào người chơi "vợt đập ruồi neon buộc sau vai phải, vẫy mạnh khi chuỗi đúng đạt 3".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
@@ -38,7 +39,7 @@ Tạo game giáo dục web "ĐẬP CHUỘT THÒ ĐẦU" cho học sinh Việt Na
 - Cử chỉ fire ở lượt chuyển trạng thái, có hysteresis hai ngưỡng + cooldown + ngưỡng tin cậy; hover không tính là đã chọn; giữ nguyên tư thế không được spam event và không bị trừ tim; confidence thấp thì không chốt đáp án.
 - FALLBACK bắt buộc: chuột / cảm ứng / phím mũi tên mô phỏng ĐÚNG hành động chính; có nhãn "Chế độ không dùng camera"; mục tiêu học tập vẫn đủ 100% khi chơi bằng fallback.
 - Không điểm số, không xếp hạng, không timer thi đua. Sai không phạt bằng cách biến mất kiến thức: dừng 2 giây và hiện lời giải đầy đủ bằng tiếng Việt, chỉ rõ chữ số / bước / từ cần sửa.
-- Vận động thật: mỗi lượt một động tác rộng cả tay và thân, không nhấc ngón ngay trước ngực. Theo 5 bước: Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính, kèm Khởi động 60–90 giây và Hạ nhiệt 45–60 giây; một phiên ≤10 phút để vừa tiết 45 phút.
+- Vận động thật: chuyển động là cách chơi chính, không phải trang trí — game không thể hoàn thành bằng cử động ngón tay nhỏ tại chỗ hay nằm yên bấm; mỗi lượt bắt buộc một động tác rộng cả tay và thân, không nhấc ngón ngay trước ngực. Theo 5 bước: Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính, kèm Khởi động 60–90 giây và Hạ nhiệt 45–60 giây; một phiên ≤10 phút để vừa tiết 45 phút.
 - Lớp 4 em: một em chơi, ba em chờ có việc thật (đếm nhịp, cổ vũ, theo dõi đáp án), luân phiên theo sĩ số M với thời gian chờ ≤20 giây và nhãn "đến lượt em"; thành tích ghi cho cả đội, không so cá nhân.
 - Mọi học sinh dùng được: không chỉ báo hiệu bằng màu (kèm hình hoặc chữ), phụ đề tiếng Việt cho mọi âm thanh, chữ đề ≥28px desktop và ≥20px điện thoại, responsive dọc và ngang, nút Giảm hiệu ứng chuyển động, không nhấp nháy quá 3Hz, vùng chơi an toàn có thảm/cọc tiêu cảnh báo và nút "Chơi chậm lại" không bị trừ tim.
 - Tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1. Máy yếu: nhận diện 1 lần mỗi 2–3 khung hình, particle dùng pool, tự giảm chi tiết khi FPS tụt.

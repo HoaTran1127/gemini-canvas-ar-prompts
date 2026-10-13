@@ -2,9 +2,7 @@
 
 > Khung chuẩn của mọi prompt trong thư viện này. Muốn tạo game mới: copy khối `text` bên dưới, điền phần `[...]` ở mục 1 và 2, rồi dán vào **Google Gemini → bật chế độ Canvas** để có nút Run/Preview chơi ngay.
 >
-> Bản này là bản RÚT GỌN (2026-10-05). Trước đây master dài 188 KB và mỗi prompt game dài 162 KB; Gemini nhận quá nhiều quy định cùng lúc nên sinh game lan man, thiếu đúng cái được yêu cầu. Toàn bộ quy định chung giờ nén thành **14 dòng** ở mục 3, và mọi prompt có trần **15 KB**.
->
-> Muốn đổi quy định chung cho cả thư viện: sửa `tools/lib/core.mjs` rồi chạy `node tools/build-prompts.mjs`.
+> Muốn đổi quy định chung cho cả thư viện: sửa `CORE_LINES` rồi chạy `node tools/build.mjs` — build ghé nguyên văn 14 dòng đó vào mục 3 của file này và của mọi prompt, rồi báo đỏ nếu một file vượt trần **15 KB**.
 
 ## Prompt copy trực tiếp
 
@@ -46,7 +44,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 - Cử chỉ fire ở lượt chuyển trạng thái, có hysteresis hai ngưỡng + cooldown + ngưỡng tin cậy; hover không tính là đã chọn; giữ nguyên tư thế không được spam event và không bị trừ tim; confidence thấp thì không chốt đáp án.
 - FALLBACK bắt buộc: chuột / cảm ứng / phím mũi tên mô phỏng ĐÚNG hành động chính; có nhãn "Chế độ không dùng camera"; mục tiêu học tập vẫn đủ 100% khi chơi bằng fallback.
 - Không điểm số, không xếp hạng, không timer thi đua. Sai không phạt bằng cách biến mất kiến thức: dừng 2 giây và hiện lời giải đầy đủ bằng tiếng Việt, chỉ rõ chữ số / bước / từ cần sửa.
-- Vận động thật: mỗi lượt một động tác rộng cả tay và thân, không nhấc ngón ngay trước ngực. Theo 5 bước: Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính, kèm Khởi động 60–90 giây và Hạ nhiệt 45–60 giây; một phiên ≤10 phút để vừa tiết 45 phút.
+- Vận động thật: chuyển động là cách chơi chính, không phải trang trí — game không thể hoàn thành bằng cử động ngón tay nhỏ tại chỗ hay nằm yên bấm; mỗi lượt bắt buộc một động tác rộng cả tay và thân, không nhấc ngón ngay trước ngực. Theo 5 bước: Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính, kèm Khởi động 60–90 giây và Hạ nhiệt 45–60 giây; một phiên ≤10 phút để vừa tiết 45 phút.
 - Lớp 4 em: một em chơi, ba em chờ có việc thật (đếm nhịp, cổ vũ, theo dõi đáp án), luân phiên theo sĩ số M với thời gian chờ ≤20 giây và nhãn "đến lượt em"; thành tích ghi cho cả đội, không so cá nhân.
 - Mọi học sinh dùng được: không chỉ báo hiệu bằng màu (kèm hình hoặc chữ), phụ đề tiếng Việt cho mọi âm thanh, chữ đề ≥28px desktop và ≥20px điện thoại, responsive dọc và ngang, nút Giảm hiệu ứng chuyển động, không nhấp nháy quá 3Hz, vùng chơi an toàn có thảm/cọc tiêu cảnh báo và nút "Chơi chậm lại" không bị trừ tim.
 - Tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1. Máy yếu: nhận diện 1 lần mỗi 2–3 khung hình, particle dùng pool, tự giảm chi tiết khi FPS tụt.
@@ -70,13 +68,14 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 - Chạy hết ràng buộc cốt lõi (1 file HTML · camera tắt mặc định · toScreen · fallback chuột · không điểm/xếp hạng/timer · 5 bước · 4 em luân phiên · tiếp cận · tự Pause · chữ ký MiTi). Riêng ngân hàng: đủ số mục tối thiểu, mỗi mục có answer + explanation + loiViet, không trùng câu, không ra ngoài phạm vi lớp đã nêu; câu sai vào hàng đợi luyện lại trong cùng phiên.
 ```
 
-## Bảng tra mã điều khiển (14 mã, nguồn `tools/data/gestures.mjs`)
+## Bảng tra mã điều khiển (15 mã, nguồn `tools/data/gestures.mjs`)
 
 | Mã | Tên trên HUD | Landmark |
 |---|---|---|
 | `POINT` | Chỉ ngón tay trỏ | HandLandmarker, đầu ngón trỏ (8) |
 | `SWIPE` | Vuốt / chém | HandLandmarker, quỹ đạo ngón trỏ (8) qua 5–8 khung hình |
 | `PUNCH` | Vung tay đấm | HandLandmarker, cổ tay (0) + mũi (15) + độ gập ngón |
+| `SWAT` | Đập / vụt bằng vật cầm tay | HandLandmarker, cổ tay (0) + đầu ngón giữa (12) · nhiều đích: 12 lỗ, 1 đáp án đúng, đập hụt không trừ tim |
 | `GRAB` | Nắm và thả | HandLandmarker, tâm bàn tay (5, 9, 13, 17), trạng thái nắm/xòe |
 | `DRAG` | Kéo thả | HandLandmarker, đầu ngón trỏ làm điểm kéo |
 | `STEP` | Nghiêng người / bước sang vùng | PoseLandmarker, hai vai (11, 12) + mũi (0) |
@@ -89,7 +88,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 | `HOLD_POSE` | Giữ bất động tư thế | PoseLandmarker (hoặc HandLandmarker nếu chỉ giữ tay) |
 | `VOICE` | Nói | Web Speech API SpeechRecognition (en-US/en-GB), không dùng MediaPipe |
 
-Model bắt buộc theo mã: `STEP`, `TWO_HAND_STRETCH`, `TWO_HAND_BALANCE`, `ANGLE_POSE` dùng PoseLandmarker; các mã Hand còn lại dùng HandLandmarker. Mỗi game tối đa 2 mã, mã đầu là cơ chế chính; mã phụ chỉ dùng cho thao tác phụ và không được tranh chấp với mã chính.
+Model bắt buộc theo mã lấy đúng theo bảng trên (bốn mã tư thế dùng PoseLandmarker, các mã tay còn lại dùng HandLandmarker). Mỗi game tối đa 2 mã, mã đầu là cơ chế chính; mã phụ chỉ dùng cho thao tác phụ và không được tranh chấp với mã chính.
 
 ## Ảnh đồ hoạ — lấy từ Canva, đừng để Gemini tự bịa
 
@@ -100,11 +99,10 @@ Prompt chỉ tham chiếu file có thật trong `games/<ten-game>/assets/`, nêu
 3. Đổi tên không dấu, convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB.
 4. Đặt file vào `assets/` trước khi dán prompt — tên phải khớp từng chữ.
 
-Ba tên `nen` · `mascot` · `vat-the` chỉ là quy ước cho game mới; game mẫu `l4-05` chạy 4 file tên riêng (`nen-xuong` · `tho-can` · `ban-can` · `ken-hang`): mở `assets/` của game lấy tên thật, đừng đoán.
+Ba tên `nen` · `mascot` · `vat-the` chỉ là quy ước — mở `assets/` của game (ví dụ `l4-05` chạy `nen-xuong` · `tho-can` · `ban-can` · `ken-hang`) mà lấy tên thật, đừng đoán.
 
 Thiếu ảnh thì game tự thay bằng khối bo góc `--miti-1` kèm chữ nên vẫn chơi được. Cấm emoji và cấm URL bịa vì hai thứ này không báo lỗi, chỉ làm game trông rẻ tiền.
 
 ## Vì sao prompt ngắn lại (ghi chú cho tác giả)
 
-- Bản cũ 162 KB/file, ~77% là quy định chung lặp lại giữa 85 file; Gemini ngợp nên bỏ mục tiêu học tập, sinh game "linh tinh". Bản nay 12,8 KB/file, 57 dòng: 4,3 KB là 14 dòng CORE kỹ thuật, phần còn lại là mục tiêu của riêng game, mở đầu bằng dòng ƯU TIÊN (học tập → nhận diện chuyển động → còn lại) và trang trí mang nhãn "được phép làm đơn giản".
-- Đổi quy định chung: thêm một dòng vào `CORE_LINES` ở `tools/lib/core.mjs` rồi `node tools/build.mjs`. `validate.mjs` bắt mọi prompt chứa đủ các dòng đó, có dòng ƯU TIÊN trong 4 dòng đầu, và báo đỏ nếu vượt 15 KB.
+- Bản cũ 162 KB/file với ~77% là quy định chung lặp lại giữa các file; bản nay ~13 KB/file, mở đầu bằng dòng ƯU TIÊN và trang trí mang nhãn "được phép làm đơn giản". Quy định chung nằm trong `CORE_LINES` ở `tools/lib/core.mjs`.
